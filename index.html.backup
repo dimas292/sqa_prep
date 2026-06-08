@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SQA Learn — Software Quality Assurance</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d14;
+    --bg2: #14141f;
+    --bg3: #1c1c2e;
+    --bg4: #22223a;
+    --surface: #2a2a44;
+    --border: rgba(160,140,255,0.12);
+    --border-h: rgba(160,140,255,0.28);
+    --accent: #8b7cf8;
+    --accent2: #a78bfa;
+    --accent3: #c4b5fd;
+    --gold: #f5c842;
+    --teal: #34d399;
+    --coral: #fb7185;
+    --sky: #60a5fa;
+    --text: #e8e4ff;
+    --text2: #a89dc4;
+    --text3: #6b6285;
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --r: 10px;
+    --r2: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── LAYOUT ── */
+  .shell { display: flex; min-height: 100vh; }
+  .sidebar {
+    width: 260px;
+    min-width: 260px;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .main { flex: 1; overflow-x: hidden; }
+
+  /* ── SIDEBAR ── */
+  .logo {
+    padding: 24px 20px 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  .logo-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent) 0%, #6d5bd4 100%);
+    color: #fff;
+    font-family: var(--font-head);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 3px 9px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  .logo h1 {
+    font-family: var(--font-head);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .logo p {
+    font-size: 12px;
+    color: var(--text3);
+    margin-top: 3px;
+  }
+  .nav-section { padding: 14px 12px 6px; }
+  .nav-section-title {
+    font-family: var(--font-head);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--text3);
+    padding: 0 8px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .cat-group { margin-bottom: 4px; }
+  .cat-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: var(--r);
+    color: var(--text2);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    text-align: left;
+    transition: all .18s;
+  }
+  .cat-btn:hover { background: var(--bg3); color: var(--text); }
+  .cat-btn.active { background: rgba(139,124,248,0.15); color: var(--accent3); }
+  .cat-icon {
+    width: 28px; height: 28px;
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .cat-chevron {
+    margin-left: auto;
+    font-size: 11px;
+    transition: transform .18s;
+    color: var(--text3);
+  }
+  .cat-btn.open .cat-chevron { transform: rotate(90deg); }
+  .parts-list {
+    display: none;
+    padding: 2px 0 4px 46px;
+  }
+  .parts-list.open { display: block; }
+  .part-btn {
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    color: var(--text3);
+    transition: all .15s;
+  }
+  .part-btn:hover { color: var(--text2); background: var(--bg3); }
+  .part-btn.active { color: var(--accent2); font-weight: 500; }
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 14px 16px;
+    border-top: 1px solid var(--border);
+  }
+  .progress-bar-wrap {
+    background: var(--bg3);
+    border-radius: 4px;
+    height: 5px;
+    overflow: hidden;
+    margin-top: 6px;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--teal));
+    border-radius: 4px;
+    transition: width .4s ease;
+    width: 0%;
+  }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text3);
+    margin-bottom: 4px;
+  }
+
+  /* ── HEADER ── */
+  .page-header {
+    padding: 36px 44px 28px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+  }
+  .breadcrumb {
+    font-size: 12px;
+    color: var(--text3);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .breadcrumb span { color: var(--accent2); }
+  .page-header h2 {
+    font-family: var(--font-head);
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.25;
+  }
+  .page-header .meta {
+    margin-top: 8px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11.5px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+  }
+  .tag-level { background: rgba(245,200,66,0.12); color: var(--gold); }
+  .tag-time  { background: rgba(52,211,153,0.1); color: var(--teal); }
+  .tag-cat   { background: rgba(139,124,248,0.14); color: var(--accent2); }
+
+  /* ── CONTENT ── */
+  .content-area { padding: 36px 44px 60px; max-width: 800px; }
+
+  /* ── PART CARD ── */
+  .part-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .part-num {
+    font-family: var(--font-head);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--text3);
+    background: var(--bg3);
+    padding: 3px 9px;
+    border-radius: 4px;
+  }
+  .part-title {
+    font-family: var(--font-head);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .material-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    line-height: 1.8;
+    color: var(--text2);
+    font-size: 14.5px;
+  }
+  .material-card p { margin-bottom: 12px; }
+  .material-card p:last-child { margin-bottom: 0; }
+  .material-card ul {
+    padding-left: 20px;
+    margin: 10px 0;
+  }
+  .material-card ul li { margin-bottom: 6px; }
+  .material-card strong { color: var(--text); font-weight: 500; }
+
+  /* ── HIGHLIGHT / TERM ── */
+  .term {
+    display: inline;
+    background: rgba(139,124,248,0.18);
+    border-bottom: 1.5px solid var(--accent);
+    color: var(--accent3);
+    padding: 1px 3px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background .15s;
+    position: relative;
+  }
+  .term:hover { background: rgba(139,124,248,0.32); }
+  .term[data-type="process"] {
+    background: rgba(52,211,153,0.12);
+    border-bottom-color: var(--teal);
+    color: #6ee7b7;
+  }
+  .term[data-type="tool"] {
+    background: rgba(96,165,250,0.12);
+    border-bottom-color: var(--sky);
+    color: #93c5fd;
+  }
+  .term[data-type="metric"] {
+    background: rgba(245,200,66,0.1);
+    border-bottom-color: var(--gold);
+    color: #fde68a;
+  }
+  .term[data-type="error"] {
+    background: rgba(251,113,133,0.1);
+    border-bottom-color: var(--coral);
+    color: #fda4af;
+  }
+
+  /* ── TOOLTIP ── */
+  .tooltip-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+    pointer-events: none;
+  }
+  .tooltip-box {
+    position: fixed;
+    z-index: 1000;
+    background: var(--bg4);
+    border: 1px solid var(--border-h);
+    border-radius: var(--r2);
+    padding: 14px 18px;
+    max-width: 300px;
+    min-width: 200px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity .2s, transform .2s;
+  }
+  .tooltip-box.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .tooltip-label {
+    font-family: var(--font-head);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .tooltip-label.concept { color: var(--accent2); }
+  .tooltip-label.process { color: var(--teal); }
+  .tooltip-label.tool    { color: var(--sky); }
+  .tooltip-label.metric  { color: var(--gold); }
+  .tooltip-label.error   { color: var(--coral); }
+  .tooltip-term {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+    font-family: var(--font-head);
+  }
+  .tooltip-def {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  /* ── LEGEND ── */
+  .legend-bar {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 14px 20px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    margin-bottom: 24px;
+    font-size: 12px;
+    color: var(--text3);
+    align-items: center;
+  }
+  .legend-bar strong { color: var(--text2); font-size: 11.5px; margin-right: 6px; }
+  .legend-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    cursor: default;
+  }
+  .ld {
+    width: 9px; height: 9px; border-radius: 50%;
+  }
+
+  /* ── QUIZ ── */
+  .quiz-section {
+    margin-top: 28px;
+  }
+  .quiz-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .quiz-icon {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--accent), #6d5bd4);
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
+  }
+  .quiz-header h3 {
+    font-family: var(--font-head);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .quiz-header p {
+    font-size: 12px;
+    color: var(--text3);
+  }
+  .quiz-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    padding: 24px 28px;
+    margin-bottom: 14px;
+  }
+  .quiz-card.answered { border-color: var(--border-h); }
+  .quiz-q {
+    font-size: 14.5px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 14px;
+    line-height: 1.6;
+  }
+  .quiz-q .q-num {
+    display: inline-block;
+    font-family: var(--font-head);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--accent2);
+    background: rgba(139,124,248,0.14);
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-right: 8px;
+    vertical-align: 1px;
+  }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .option-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 11px 15px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    cursor: pointer;
+    text-align: left;
+    color: var(--text2);
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    line-height: 1.5;
+    transition: all .15s;
+  }
+  .option-btn:hover:not(:disabled) { border-color: var(--border-h); background: var(--surface); color: var(--text); }
+  .option-btn:disabled { cursor: default; }
+  .option-btn.correct { background: rgba(52,211,153,0.1); border-color: rgba(52,211,153,0.4); color: #6ee7b7; }
+  .option-btn.wrong   { background: rgba(251,113,133,0.1); border-color: rgba(251,113,133,0.35); color: #fda4af; }
+  .opt-circle {
+    width: 20px; height: 20px; min-width: 20px;
+    border-radius: 50%;
+    border: 1.5px solid currentColor;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    margin-top: 1px;
+  }
+  .quiz-feedback {
+    margin-top: 12px;
+    padding: 11px 15px;
+    border-radius: var(--r);
+    font-size: 13px;
+    display: none;
+    line-height: 1.6;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.ok { background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.2); color: #6ee7b7; }
+  .quiz-feedback.no { background: rgba(251,113,133,0.08); border: 1px solid rgba(251,113,133,0.2); color: #fda4af; }
+
+  /* ── SCORE BANNER ── */
+  .score-banner {
+    display: none;
+    margin-top: 18px;
+    padding: 18px 22px;
+    border-radius: var(--r2);
+    border: 1px solid var(--border-h);
+    background: var(--bg3);
+    align-items: center;
+    gap: 16px;
+  }
+  .score-banner.show { display: flex; }
+  .score-big {
+    font-family: var(--font-head);
+    font-size: 36px;
+    font-weight: 800;
+    min-width: 80px;
+    text-align: center;
+    line-height: 1;
+  }
+  .score-big.great { color: var(--teal); }
+  .score-big.ok    { color: var(--gold); }
+  .score-big.poor  { color: var(--coral); }
+  .score-meta { flex: 1; }
+  .score-meta strong {
+    display: block;
+    font-family: var(--font-head);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .score-meta p { font-size: 13px; color: var(--text2); }
+  .retry-btn {
+    padding: 9px 18px;
+    background: rgba(139,124,248,0.15);
+    border: 1px solid rgba(139,124,248,0.3);
+    border-radius: 8px;
+    color: var(--accent3);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .retry-btn:hover { background: rgba(139,124,248,0.25); }
+
+  /* ── NAV BUTTONS ── */
+  .part-nav {
+    display: flex;
+    gap: 12px;
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+  .nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 18px;
+    border-radius: var(--r);
+    border: 1px solid var(--border);
+    background: var(--bg2);
+    color: var(--text2);
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .nav-btn:hover { border-color: var(--border-h); color: var(--text); background: var(--bg3); }
+  .nav-btn.primary {
+    background: rgba(139,124,248,0.15);
+    border-color: rgba(139,124,248,0.3);
+    color: var(--accent3);
+    margin-left: auto;
+  }
+  .nav-btn.primary:hover { background: rgba(139,124,248,0.25); }
+
+  /* ── WELCOME ── */
+  .welcome-screen { padding: 48px 44px; max-width: 700px; }
+  .welcome-screen .big-title {
+    font-family: var(--font-head);
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, var(--text) 0%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .welcome-screen .sub {
+    color: var(--text2);
+    font-size: 15px;
+    margin-bottom: 32px;
+    line-height: 1.8;
+  }
+  .feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .feat-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    padding: 18px 20px;
+  }
+  .feat-card .icon { font-size: 22px; margin-bottom: 8px; }
+  .feat-card strong {
+    display: block;
+    font-family: var(--font-head);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .feat-card p { font-size: 12.5px; color: var(--text3); line-height: 1.6; }
+  .start-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 26px;
+    background: linear-gradient(135deg, var(--accent), #6d5bd4);
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity .15s, transform .15s;
+    letter-spacing: 0.2px;
+  }
+  .start-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+  /* ── DONE BADGE ── */
+  .done-badge {
+    width: 16px; height: 16px;
+    background: var(--teal);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    color: #000;
+    margin-left: auto;
+    flex-shrink: 0;
+    font-weight: 700;
+  }
+  .cat-done-badge {
+    width: 16px; height: 16px;
+    background: var(--teal);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    color: #000;
+    flex-shrink: 0;
+    font-weight: 700;
+    margin-left: 4px;
+  }
+
+  @media (max-width: 700px) {
+    .sidebar { display: none; }
+    .content-area, .welcome-screen { padding: 24px 20px 48px; }
+    .page-header { padding: 24px 20px; }
+    .feature-grid { grid-template-columns: 1fr; }
+    .welcome-screen .big-title { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="logo">
+      <div class="logo-badge">BELAJAR</div>
+      <h1>SQA Learn</h1>
+      <p>Software Quality Assurance</p>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-title">Materi</div>
+      <div id="nav-cats"></div>
+    </div>
+    <div class="sidebar-footer">
+      <div class="progress-label">
+        <span>Progress</span>
+        <span id="prog-txt">0%</span>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="prog-bar"></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="main" id="main-panel">
+    <!-- will be rendered by JS -->
+  </div>
+</div>
+
+<!-- TOOLTIP -->
+<div class="tooltip-box" id="tooltip">
+  <div class="tooltip-label" id="tt-type"></div>
+  <div class="tooltip-term" id="tt-term"></div>
+  <div class="tooltip-def" id="tt-def"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// DATA — MATERI SQA
+// ═══════════════════════════════════════════════
+const GLOSSARY = {
+  "SQA": { type: "concept", def: "Software Quality Assurance — proses sistematis memastikan software memenuhi standar kualitas yang ditetapkan sebelum dan selama pengembangan." },
+  "bug": { type: "error", def: "Kesalahan atau cacat pada kode program yang menyebabkan software tidak berjalan sesuai harapan." },
+  "defect": { type: "error", def: "Ketidaksesuaian antara perilaku aktual software dengan spesifikasi yang seharusnya." },
+  "test case": { type: "process", def: "Dokumen yang mendefinisikan input, kondisi eksekusi, dan hasil yang diharapkan untuk menguji suatu fungsi software." },
+  "test plan": { type: "process", def: "Dokumen resmi yang menjelaskan ruang lingkup, pendekatan, sumber daya, dan jadwal aktivitas pengujian." },
+  "regression testing": { type: "process", def: "Pengujian ulang software setelah ada perubahan untuk memastikan tidak ada fungsionalitas yang sebelumnya bekerja menjadi rusak." },
+  "unit testing": { type: "process", def: "Pengujian pada unit/komponen terkecil dari software secara independen, biasanya dilakukan oleh developer." },
+  "integration testing": { type: "process", def: "Pengujian yang memverifikasi bahwa beberapa unit/modul bekerja dengan benar saat digabungkan." },
+  "black-box testing": { type: "process", def: "Metode pengujian di mana tester tidak mengetahui internal kode — hanya fokus pada input dan output." },
+  "white-box testing": { type: "process", def: "Metode pengujian di mana tester mengetahui struktur internal kode dan menulis test berdasarkan logikanya." },
+  "UAT": { type: "process", def: "User Acceptance Testing — pengujian oleh pengguna akhir untuk memvalidasi software sesuai kebutuhan bisnis sebelum go-live." },
+  "SDLC": { type: "concept", def: "Software Development Life Cycle — tahapan proses pengembangan software dari perencanaan hingga perawatan." },
+  "QA": { type: "concept", def: "Quality Assurance — aktivitas sistematis untuk memastikan proses menghasilkan produk berkualitas." },
+  "QC": { type: "concept", def: "Quality Control — inspeksi dan pengujian produk akhir untuk menemukan defect." },
+  "smoke testing": { type: "process", def: "Pengujian cepat untuk memastikan fungsi-fungsi dasar sistem berjalan sebelum masuk ke testing yang lebih detail." },
+  "sanity testing": { type: "process", def: "Pengujian fokus untuk memverifikasi bahwa perubahan spesifik atau perbaikan bug sudah benar bekerja." },
+  "automation testing": { type: "tool", def: "Pengujian menggunakan script/tools otomatis (seperti Selenium, Cypress) untuk menjalankan test case tanpa intervensi manual." },
+  "manual testing": { type: "process", def: "Pengujian yang dilakukan secara langsung oleh manusia, tanpa bantuan tools otomatis." },
+  "test coverage": { type: "metric", def: "Persentase kode atau fitur yang sudah dicakup oleh test case — semakin tinggi semakin baik kualitasnya." },
+  "severity": { type: "metric", def: "Tingkat dampak sebuah defect terhadap fungsionalitas sistem (Critical, Major, Minor, Trivial)." },
+  "priority": { type: "metric", def: "Seberapa segera sebuah defect harus diperbaiki berdasarkan kebutuhan bisnis." },
+  "test environment": { type: "concept", def: "Konfigurasi hardware dan software yang dipersiapkan khusus untuk melakukan pengujian, terpisah dari production." },
+  "bug life cycle": { type: "process", def: "Siklus hidup sebuah bug mulai dari ditemukan (New) → ditugaskan → diperbaiki → diverifikasi → ditutup." },
+  "requirement": { type: "concept", def: "Deskripsi tertulis tentang apa yang harus dilakukan software — fondasi untuk membuat test case." },
+  "test scenario": { type: "process", def: "Deskripsi high-level tentang apa yang akan diuji, lebih umum dari test case." },
+  "performance testing": { type: "process", def: "Pengujian untuk mengevaluasi kecepatan, stabilitas, dan kemampuan sistem di bawah beban kerja tertentu." },
+  "load testing": { type: "process", def: "Jenis performance testing yang menguji sistem dengan jumlah pengguna/transaksi yang diharapkan." },
+  "stress testing": { type: "process", def: "Menguji sistem di luar kapasitas normal untuk menemukan titik kegagalannya." },
+  "security testing": { type: "process", def: "Pengujian untuk menemukan celah keamanan (vulnerabilities) dalam software agar tidak bisa dieksploitasi." },
+  "traceability matrix": { type: "tool", def: "Dokumen yang memetakan requirement ke test case — memastikan semua requirement sudah ada test-nya." },
+  "STLC": { type: "concept", def: "Software Testing Life Cycle — serangkaian fase spesifik dalam proses pengujian software." },
+  "verification": { type: "concept", def: "Memastikan software dibangun dengan benar sesuai spesifikasi (Are we building the product right?)." },
+  "validation": { type: "concept", def: "Memastikan software yang dibangun adalah yang benar dan memenuhi kebutuhan pengguna (Are we building the right product?)." },
+  "exploratory testing": { type: "process", def: "Pengujian tanpa skrip yang sudah ditetapkan — tester bebas mengeksplorasi software secara kreatif untuk menemukan bug." },
+  "Selenium": { type: "tool", def: "Framework open-source populer untuk automation testing pada web application menggunakan berbagai bahasa pemrograman." },
+  "Jira": { type: "tool", def: "Tool manajemen proyek dan bug tracking yang banyak digunakan tim QA untuk melacak defect dan test activities." },
+  "API testing": { type: "process", def: "Pengujian langsung pada Application Programming Interface untuk memvalidasi fungsionalitas, keandalan, dan keamanan." },
+  "Agile": { type: "concept", def: "Metodologi pengembangan software iteratif dan kolaboratif, di mana QA bekerja bersama developer sejak awal sprint." },
+  "sprint": { type: "concept", def: "Periode waktu singkat (biasanya 1-2 minggu) dalam Agile di mana tim menyelesaikan sekumpulan pekerjaan." },
+  "CI/CD": { type: "tool", def: "Continuous Integration/Continuous Delivery — praktik otomatisasi build, test, dan deployment software secara berkelanjutan." },
+  "defect density": { type: "metric", def: "Jumlah defect per ukuran software (misalnya per 1000 baris kode) — indikator kualitas kode." },
+  "MTTR": { type: "metric", def: "Mean Time To Repair — rata-rata waktu yang dibutuhkan untuk memperbaiki sebuah defect atau kegagalan sistem." },
+  "boundary value analysis": { type: "process", def: "Teknik test design yang menguji nilai-nilai di batas (minimum, maksimum) dari suatu input, karena banyak bug terjadi di sana." },
+  "equivalence partitioning": { type: "process", def: "Teknik membagi data input ke dalam kelas-kelas yang setara agar test case lebih efisien." },
+  "test script": { type: "tool", def: "Sekumpulan instruksi (manual atau kode) yang menjelaskan langkah-langkah untuk mengeksekusi sebuah test case." },
+  "retesting": { type: "process", def: "Pengujian ulang khusus pada bug yang sudah diperbaiki untuk memastikan perbaikan berhasil." },
+  "test suite": { type: "tool", def: "Kumpulan test case yang dikelompokkan bersama untuk tujuan pengujian tertentu." },
+  "cross-browser testing": { type: "process", def: "Pengujian untuk memastikan web application berjalan dengan baik di berbagai browser (Chrome, Firefox, Safari, dll)." },
+};
+
+const CATEGORIES = [
+  {
+    id: "pengantar",
+    icon: "🎯",
+    color: "#8b7cf8",
+    title: "Pengantar SQA",
+    desc: "Fondasi dan konsep dasar Software Quality Assurance",
+    parts: [
+      {
+        id: "p1",
+        title: "Apa itu SQA?",
+        readTime: "3 menit",
+        material: `<p><span class="term" data-term="SQA">SQA</span> atau Software Quality Assurance adalah serangkaian aktivitas sistematis yang dirancang untuk memastikan bahwa proses pengembangan software dan produk akhirnya memenuhi standar kualitas yang telah ditetapkan.</p>
+<p>Sederhananya, <span class="term" data-term="SQA">SQA</span> menjawab pertanyaan: <strong>"Apakah kita membangun software dengan cara yang benar dan menghasilkan produk yang tepat?"</strong></p>
+<p>Penting untuk memahami perbedaan <span class="term" data-term="QA">QA</span> dan <span class="term" data-term="QC">QC</span>:
+<ul>
+  <li><span class="term" data-term="QA">QA</span> berfokus pada <strong>proses</strong> — memastikan cara kerja tim sudah benar sejak awal.</li>
+  <li><span class="term" data-term="QC">QC</span> berfokus pada <strong>produk</strong> — memeriksa hasil akhir apakah ada <span class="term" data-term="defect">defect</span>.</li>
+</ul>
+</p>
+<p>SQA bukan hanya tugas tim testing — ini adalah tanggung jawab seluruh tim pengembangan, dari developer, tester, hingga project manager.</p>`,
+        quiz: [
+          {
+            q: "Apa perbedaan utama antara QA dan QC?",
+            options: ["QA lebih mahal dari QC", "QA fokus pada proses, QC fokus pada produk akhir", "QC dilakukan lebih awal dari QA", "Keduanya sama saja"],
+            answer: 1,
+            explain: "QA (Quality Assurance) fokus memastikan proses pengembangan berjalan benar. QC (Quality Control) fokus pada inspeksi produk akhir untuk menemukan defect."
+          },
+          {
+            q: "Siapa yang bertanggung jawab atas SQA dalam sebuah proyek?",
+            options: ["Hanya tim QA/tester", "Hanya developer yang menulis kode", "Seluruh tim pengembangan", "Hanya project manager"],
+            answer: 2,
+            explain: "SQA adalah tanggung jawab seluruh tim — developer, tester, project manager, bahkan stakeholder. Kualitas adalah budaya, bukan hanya peran satu orang."
+          }
+        ]
+      },
+      {
+        id: "p2",
+        title: "SQA dalam SDLC",
+        readTime: "4 menit",
+        material: `<p><span class="term" data-term="SDLC">SDLC</span> (Software Development Life Cycle) adalah kerangka kerja yang mendefinisikan tahapan pengembangan software. <span class="term" data-term="SQA">SQA</span> hadir di setiap tahapan ini, bukan hanya di akhir.</p>
+<p>Tahapan SDLC dan peran SQA di dalamnya:</p>
+<ul>
+  <li><strong>Requirement</strong> — QA me-review <span class="term" data-term="requirement">requirement</span> untuk memastikan jelas, lengkap, dan dapat diuji.</li>
+  <li><strong>Design</strong> — QA memeriksa desain sistem apakah sudah sesuai requirement.</li>
+  <li><strong>Development</strong> — Developer menulis kode + <span class="term" data-term="unit testing">unit testing</span>.</li>
+  <li><strong>Testing</strong> — Tim QA menjalankan berbagai jenis pengujian secara intensif.</li>
+  <li><strong>Deployment</strong> — QA memastikan proses deployment berjalan mulus.</li>
+  <li><strong>Maintenance</strong> — <span class="term" data-term="regression testing">Regression testing</span> dilakukan setiap ada perubahan/update.</li>
+</ul>
+<p>Prinsip penting: <strong>Semakin awal bug ditemukan, semakin murah biaya perbaikannya.</strong> Bug yang ditemukan di fase requirement jauh lebih murah diperbaiki dibanding bug yang ditemukan setelah production.</p>
+<p>Selain SDLC, ada juga <span class="term" data-term="STLC">STLC</span> — Software Testing Life Cycle yang khusus mengatur alur proses pengujian dari awal sampai selesai.</p>`,
+        quiz: [
+          {
+            q: "Mengapa SQA sebaiknya dimulai sejak fase requirement, bukan hanya di fase testing?",
+            options: ["Karena tester lebih suka bekerja di awal", "Karena bug yang ditemukan lebih awal jauh lebih murah diperbaiki", "Karena tidak ada pekerjaan di fase testing", "Karena requirement tidak perlu diuji"],
+            answer: 1,
+            explain: "Ini dikenal sebagai 'shift-left testing'. Biaya memperbaiki bug meningkat drastis semakin terlambat ditemukan. Bug di fase requirement mungkin hanya butuh revisi dokumen, tapi bug di production bisa membutuhkan waktu dan biaya berlipat ganda."
+          },
+          {
+            q: "Apa yang dilakukan regression testing?",
+            options: ["Menguji fitur baru yang baru ditambahkan", "Memastikan perubahan baru tidak merusak fungsionalitas yang sudah ada", "Menguji performa server", "Menghapus bug lama dari sistem"],
+            answer: 1,
+            explain: "Regression testing dilakukan setelah ada perubahan kode untuk memastikan fitur yang sebelumnya berjalan dengan baik tidak 'rusak' akibat perubahan tersebut."
+          },
+          {
+            q: "Apa kepanjangan STLC?",
+            options: ["System Testing Life Cycle", "Software Testing Language Concept", "Software Testing Life Cycle", "Standard Testing Level Check"],
+            answer: 2,
+            explain: "STLC adalah Software Testing Life Cycle — kerangka fase spesifik dalam proses pengujian, berbeda dari SDLC yang mencakup keseluruhan pengembangan."
+          }
+        ]
+      },
+      {
+        id: "p3",
+        title: "Verification vs Validation",
+        readTime: "3 menit",
+        material: `<p>Dua konsep fundamental dalam SQA yang sering membingungkan pemula adalah <span class="term" data-term="verification">Verification</span> dan <span class="term" data-term="validation">Validation</span>.</p>
+<p>Cara mudah mengingatnya:</p>
+<ul>
+  <li><span class="term" data-term="verification">Verification</span>: <strong>"Are we building the product <em>right</em>?"</strong> — Apakah kita membangun software sesuai spesifikasi yang sudah ditetapkan? Ini tentang proses yang benar.</li>
+  <li><span class="term" data-term="validation">Validation</span>: <strong>"Are we building the <em>right</em> product?"</strong> — Apakah software yang kita bangun memang yang dibutuhkan pengguna? Ini tentang kesesuaian dengan kebutuhan nyata.</li>
+</ul>
+<p>Contoh nyata: Bayangkan kamu membangun kalkulator.
+<ul>
+  <li><span class="term" data-term="verification">Verification</span>: Memeriksa apakah kode kalkulator sudah sesuai dokumen desain — tombol "+", "-", "×", "÷" sudah ada dan berfungsi.</li>
+  <li><span class="term" data-term="validation">Validation</span>: Memastikan kalkulator ini memang yang dibutuhkan user — mungkin ternyata user butuh kalkulator ilmiah, bukan kalkulator biasa!</li>
+</ul>
+</p>
+<p>Kedua hal ini bisa terjadi secara bersamaan lewat aktivitas seperti <span class="term" data-term="UAT">UAT</span> (User Acceptance Testing), di mana pengguna akhir yang menguji langsung apakah software sudah sesuai kebutuhan mereka.</p>`,
+        quiz: [
+          {
+            q: "Tim QA memeriksa dokumen desain dan kode untuk memastikan semua fitur sesuai spesifikasi. Ini contoh dari?",
+            options: ["Validation", "Verification", "User Acceptance Testing", "Exploratory Testing"],
+            answer: 1,
+            explain: "Verification adalah proses memeriksa apakah software dibangun sesuai spesifikasi/dokumen desain — 'building the product right'."
+          },
+          {
+            q: "Pengguna akhir mencoba software dan menyimpulkan bahwa meskipun semua fitur berjalan sesuai spesifikasi, software ini tidak memenuhi kebutuhan bisnis mereka. Ini adalah kegagalan?",
+            options: ["Verification", "Validation", "Regression", "Integration"],
+            answer: 1,
+            explain: "Ini adalah kegagalan Validation — software dibangun 'right' (sesuai spesifikasi) tapi bukan software yang 'right' (bukan yang sebenarnya dibutuhkan user)."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "jenis-testing",
+    icon: "🧪",
+    color: "#34d399",
+    title: "Jenis-jenis Testing",
+    desc: "Berbagai metode dan pendekatan pengujian software",
+    parts: [
+      {
+        id: "p1",
+        title: "Testing Berdasarkan Level",
+        readTime: "5 menit",
+        material: `<p>Testing dilakukan di berbagai level — dari komponen terkecil hingga keseluruhan sistem. Memahami level ini membantu tim tahu <em>kapan</em> dan <em>siapa</em> yang melakukan testing.</p>
+<ul>
+  <li><strong><span class="term" data-term="unit testing">Unit Testing</span></strong> — Menguji unit/fungsi terkecil secara terpisah. Dilakukan oleh <em>developer</em>. Contoh: menguji fungsi <code>hitungTotal()</code> apakah mengembalikan nilai yang benar.</li>
+  <li><strong><span class="term" data-term="integration testing">Integration Testing</span></strong> — Menguji interaksi antara dua modul atau lebih. Contoh: apakah modul pembayaran bisa berkomunikasi dengan benar dengan modul keranjang belanja.</li>
+  <li><strong>System Testing</strong> — Menguji keseluruhan sistem yang sudah terintegrasi dari ujung ke ujung. Dilakukan oleh tim QA.</li>
+  <li><strong><span class="term" data-term="UAT">UAT</span></strong> — Pengguna akhir yang melakukan pengujian untuk memvalidasi sistem sebelum go-live.</li>
+</ul>
+<p>Analoginya seperti membangun mobil:
+<ul>
+  <li>Unit test = mengetes setiap baut dan komponen satu per satu</li>
+  <li>Integration test = mengetes apakah mesin, transmisi, dan kopling bekerja bersama</li>
+  <li>System test = mengetes seluruh mobil di jalan</li>
+  <li>UAT = customer test drive sebelum membeli</li>
+</ul></p>`,
+        quiz: [
+          {
+            q: "Developer menulis kode untuk menguji satu fungsi kecil di aplikasinya secara terisolasi. Ini termasuk level testing apa?",
+            options: ["Integration Testing", "System Testing", "Unit Testing", "UAT"],
+            answer: 2,
+            explain: "Unit Testing menguji unit/komponen terkecil secara independen dan biasanya ditulis serta dijalankan oleh developer itu sendiri."
+          },
+          {
+            q: "QA menemukan bahwa module login berhasil, module dashboard berhasil, tapi ketika login langsung diarahkan ke dashboard, datanya hilang. Ini kemungkinan adalah masalah di level?",
+            options: ["Unit Testing", "Integration Testing", "UAT", "Performance Testing"],
+            answer: 1,
+            explain: "Masalah yang muncul saat dua atau lebih modul berinteraksi adalah ciri khas dari Integration Testing. Masing-masing modul bisa berfungsi baik secara sendiri-sendiri tapi gagal saat digabungkan."
+          }
+        ]
+      },
+      {
+        id: "p2",
+        title: "Black-box vs White-box",
+        readTime: "4 menit",
+        material: `<p>Dua pendekatan fundamental dalam menulis dan menjalankan test adalah <span class="term" data-term="black-box testing">Black-box testing</span> dan <span class="term" data-term="white-box testing">White-box testing</span> — keduanya punya kelebihan masing-masing.</p>
+<p><strong>🔲 Black-box Testing</strong><br>
+Tester tidak perlu tahu cara kerja internal kode. Fokus hanya pada <strong>input dan output</strong>. Tester berperan sebagai pengguna biasa.</p>
+<ul>
+  <li>Kelebihan: Tidak perlu skill pemrograman, sudut pandang pengguna nyata.</li>
+  <li>Contoh: Mengisi form login dengan username dan password yang valid → harusnya masuk ke dashboard.</li>
+</ul>
+<p><strong>⬜ White-box Testing</strong><br>
+Tester mengetahui kode internal dan menulis test berdasarkan struktur kode tersebut.</p>
+<ul>
+  <li>Kelebihan: <span class="term" data-term="test coverage">Test coverage</span> bisa lebih tinggi, bisa menguji kondisi tersembunyi.</li>
+  <li>Contoh: Developer menulis test untuk setiap <code>if-else</code> dan <code>loop</code> dalam kodenya.</li>
+</ul>
+<p>Ada juga <strong>Gray-box Testing</strong> — kombinasi keduanya, di mana tester punya sebagian pengetahuan tentang struktur internal.</p>
+<p>Dalam praktik nyata, <span class="term" data-term="black-box testing">black-box testing</span> lebih umum dilakukan oleh tim QA, sementara <span class="term" data-term="white-box testing">white-box testing</span> lebih banyak dilakukan oleh developer saat <span class="term" data-term="unit testing">unit testing</span>.</p>`,
+        quiz: [
+          {
+            q: "Seorang tester menguji fitur pencarian di e-commerce tanpa melihat kode, hanya mencoba berbagai kata kunci dan mengecek hasilnya. Ini adalah?",
+            options: ["White-box Testing", "Gray-box Testing", "Black-box Testing", "Unit Testing"],
+            answer: 2,
+            explain: "Black-box testing tidak memerlukan pengetahuan tentang kode internal. Tester hanya memberikan input dan memverifikasi output sesuai ekspektasi."
+          },
+          {
+            q: "Apa kelebihan utama white-box testing dibanding black-box testing?",
+            options: ["Tidak perlu pengetahuan teknis", "Bisa mencapai test coverage yang lebih tinggi dengan menguji logika internal kode", "Lebih murah dan cepat dilakukan", "Lebih mudah dipahami oleh non-developer"],
+            answer: 1,
+            explain: "White-box testing memungkinkan tester mengakses semua cabang logika, kondisi, dan jalur kode — sehingga test coverage bisa lebih komprehensif."
+          }
+        ]
+      },
+      {
+        id: "p3",
+        title: "Testing Khusus",
+        readTime: "5 menit",
+        material: `<p>Selain jenis testing standar, ada beberapa testing khusus yang penting dipahami seorang QA profesional:</p>
+<p><strong><span class="term" data-term="smoke testing">Smoke Testing</span></strong> — "Apakah mesin menyala?"<br>Test cepat di awal untuk memastikan fungsi dasar sistem berjalan sebelum testing lebih dalam. Jika smoke test gagal, tidak perlu lanjut ke testing yang lebih detail.</p>
+<p><strong><span class="term" data-term="sanity testing">Sanity Testing</span></strong> — "Apakah bug yang diperbaiki sudah benar-benar fixed?"<br>Testing fokus setelah bug diperbaiki atau ada perubahan kecil. Lebih sempit dari smoke testing.</p>
+<p><strong><span class="term" data-term="regression testing">Regression Testing</span></strong> — "Apakah perubahan ini merusak sesuatu yang lain?"<br>Test menyeluruh setelah ada perubahan untuk memastikan tidak ada fungsionalitas lain yang rusak.</p>
+<p><strong><span class="term" data-term="exploratory testing">Exploratory Testing</span></strong> — Testing kreatif tanpa skrip kaku, di mana tester bebas mengeksplorasi aplikasi menggunakan intuisi dan pengalamannya untuk menemukan bug yang tidak terpikirkan sebelumnya.</p>
+<p><strong><span class="term" data-term="performance testing">Performance Testing</span></strong> — Menguji kecepatan, stabilitas, dan skalabilitas sistem. Termasuk <span class="term" data-term="load testing">load testing</span> dan <span class="term" data-term="stress testing">stress testing</span>.</p>
+<p><strong><span class="term" data-term="security testing">Security Testing</span></strong> — Menemukan celah keamanan untuk mencegah data breach dan serangan siber.</p>`,
+        quiz: [
+          {
+            q: "Developer baru saja fix bug pada fitur checkout. QA ingin cepat memastikan bug itu sudah benar. Testing apa yang paling tepat dilakukan?",
+            options: ["Regression Testing", "Performance Testing", "Sanity Testing", "Smoke Testing"],
+            answer: 2,
+            explain: "Sanity Testing dilakukan setelah perbaikan bug untuk memverifikasi apakah fix tersebut benar-benar berhasil. Lebih fokus dan cepat dari regression testing."
+          },
+          {
+            q: "Sebelum tim QA mulai testing intensif pada build terbaru, mereka perlu memastikan dulu bahwa fitur-fitur dasar aplikasi bisa berjalan. Testing apa ini?",
+            options: ["Exploratory Testing", "Smoke Testing", "Stress Testing", "UAT"],
+            answer: 1,
+            explain: "Smoke Testing adalah pengujian awal yang cepat untuk memastikan build baru layak untuk dilanjutkan ke testing yang lebih detail. Jika smoke test gagal, build dikembalikan ke developer."
+          },
+          {
+            q: "Tim ingin menguji apakah website toko online bisa menangani 10.000 pengguna bersamaan saat flash sale. Ini adalah?",
+            options: ["Sanity Testing", "Security Testing", "Load Testing", "Regression Testing"],
+            answer: 2,
+            explain: "Load Testing menguji sistem dengan jumlah pengguna/transaksi yang diharapkan dalam kondisi normal atau peak. Ini bagian dari Performance Testing."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "proses-dokumentasi",
+    icon: "📋",
+    color: "#f5c842",
+    title: "Proses & Dokumentasi",
+    desc: "Test planning, test case, dan manajemen defect",
+    parts: [
+      {
+        id: "p1",
+        title: "Test Plan & Test Case",
+        readTime: "5 menit",
+        material: `<p>Dokumentasi adalah tulang punggung SQA yang profesional. Dua dokumen paling penting adalah <span class="term" data-term="test plan">test plan</span> dan <span class="term" data-term="test case">test case</span>.</p>
+<p><strong>📄 Test Plan</strong><br>
+Dokumen tingkat tinggi yang menjelaskan <em>keseluruhan strategi pengujian</em>. Berisi:</p>
+<ul>
+  <li><strong>Scope</strong> — Apa yang akan dan tidak akan diuji</li>
+  <li><strong>Approach</strong> — Metode pengujian yang digunakan</li>
+  <li><strong>Resources</strong> — Siapa yang bertanggung jawab</li>
+  <li><strong>Schedule</strong> — Kapan testing dilakukan</li>
+  <li><strong>Risks</strong> — Risiko yang mungkin terjadi</li>
+</ul>
+<p><strong>✅ Test Case</strong><br>
+Dokumen detail yang menjelaskan <em>satu skenario pengujian spesifik</em>. Komponen utama test case:</p>
+<ul>
+  <li><strong>Test Case ID</strong> — Identifikasi unik (misal: TC_LOGIN_001)</li>
+  <li><strong>Precondition</strong> — Kondisi awal yang harus terpenuhi</li>
+  <li><strong>Test Steps</strong> — Langkah-langkah yang harus dilakukan</li>
+  <li><strong>Test Data</strong> — Data input yang digunakan</li>
+  <li><strong>Expected Result</strong> — Hasil yang diharapkan</li>
+  <li><strong>Actual Result</strong> — Hasil aktual saat eksekusi</li>
+  <li><strong>Status</strong> — Pass / Fail / Blocked</li>
+</ul>
+<p>Hubungan <span class="term" data-term="test plan">test plan</span>, <span class="term" data-term="test scenario">test scenario</span>, dan <span class="term" data-term="test case">test case</span>: Test Plan → Test Scenario (high-level) → Test Case (detail spesifik).</p>`,
+        quiz: [
+          {
+            q: "Dokumen yang mendefinisikan langkah-langkah spesifik, data input, dan hasil yang diharapkan untuk menguji satu fungsi adalah?",
+            options: ["Test Plan", "Test Scenario", "Test Case", "Test Report"],
+            answer: 2,
+            explain: "Test Case adalah dokumen detail yang berisi langkah-langkah eksekusi, data input, precondition, dan expected result untuk satu skenario pengujian yang spesifik."
+          },
+          {
+            q: "Apa yang TIDAK biasanya ada dalam Test Plan?",
+            options: ["Scope pengujian", "Langkah detail eksekusi setiap skenario", "Jadwal testing", "Risiko pengujian"],
+            answer: 1,
+            explain: "Langkah detail eksekusi ada di Test Case, bukan Test Plan. Test Plan adalah dokumen high-level yang menjelaskan strategi keseluruhan, bukan detail per skenario."
+          }
+        ]
+      },
+      {
+        id: "p2",
+        title: "Bug Life Cycle",
+        readTime: "5 menit",
+        material: `<p>Setiap <span class="term" data-term="bug">bug</span> yang ditemukan melewati serangkaian status yang disebut <span class="term" data-term="bug life cycle">bug life cycle</span>. Memahami siklus ini penting untuk kolaborasi yang efektif antara QA dan developer.</p>
+<p>Status dalam bug life cycle:</p>
+<ul>
+  <li><strong>New</strong> — Bug baru ditemukan dan dilaporkan oleh tester</li>
+  <li><strong>Assigned</strong> — Bug ditugaskan ke developer yang relevan</li>
+  <li><strong>Open</strong> — Developer mulai menganalisis bug tersebut</li>
+  <li><strong>Fixed</strong> — Developer selesai memperbaiki bug</li>
+  <li><strong>Retest</strong> — QA melakukan <span class="term" data-term="retesting">retesting</span> untuk memverifikasi perbaikan</li>
+  <li><strong>Verified</strong> — QA mengonfirmasi bug sudah benar-benar diperbaiki</li>
+  <li><strong>Closed</strong> — Bug ditutup karena sudah selesai</li>
+  <li><strong>Reopened</strong> — Bug dilaporkan kembali jika perbaikan tidak berhasil atau bug muncul lagi</li>
+</ul>
+<p>Selain status, setiap bug juga memiliki dua atribut penting:</p>
+<ul>
+  <li><span class="term" data-term="severity">Severity</span> — Seberapa parah dampak bug terhadap sistem (Critical, Major, Minor, Trivial)</li>
+  <li><span class="term" data-term="priority">Priority</span> — Seberapa cepat bug harus diperbaiki dari sisi bisnis (High, Medium, Low)</li>
+</ul>
+<p>Contoh: Bug pada tampilan tombol yang salah warna = severity <em>trivial</em> tapi priority <em>high</em> jika tombol itu ada di landing page kampanye besar yang akan launch besok!</p>`,
+        quiz: [
+          {
+            q: "QA sudah retesting bug yang diperbaiki developer dan bug tersebut sudah tidak muncul lagi. Status bug sekarang apa?",
+            options: ["Fixed", "Closed", "Verified", "Resolved"],
+            answer: 2,
+            explain: "Setelah QA melakukan retesting dan memastikan bug sudah benar-benar diperbaiki, status berubah menjadi 'Verified'. Status 'Closed' biasanya dilakukan setelah tahap verifikasi selesai."
+          },
+          {
+            q: "Sebuah bug hanya menyebabkan pergeseran teks kecil yang hampir tidak terlihat di halaman About. Tapi perlu diperbaiki sebelum demo besok pagi. Bagaimana atribut bug ini yang tepat?",
+            options: ["Severity: Critical, Priority: High", "Severity: Trivial, Priority: High", "Severity: Major, Priority: Low", "Severity: Minor, Priority: Medium"],
+            answer: 1,
+            explain: "Severity menilai dampak teknis (pergeseran teks kecil = Trivial), sedangkan Priority menilai urgensi bisnis (perlu fixed sebelum demo = High). Severity dan Priority tidak selalu berbanding lurus."
+          },
+          {
+            q: "Bug sudah diperbaiki developer, tapi saat QA melakukan retesting, bug tersebut masih muncul. Status bug menjadi?",
+            options: ["New", "Open", "Reopened", "Assigned"],
+            answer: 2,
+            explain: "Ketika perbaikan bug terbukti tidak berhasil atau bug muncul kembali, status dikembalikan ke 'Reopened' dan siklus dimulai lagi dari tahap analisis developer."
+          }
+        ]
+      },
+      {
+        id: "p3",
+        title: "Teknik Test Design",
+        readTime: "4 menit",
+        material: `<p>Membuat test case yang efektif membutuhkan teknik-teknik khusus agar cakupan testing maksimal dengan jumlah test case yang efisien.</p>
+<p><strong>1. <span class="term" data-term="boundary value analysis">Boundary Value Analysis</span> (BVA)</strong><br>
+Banyak bug muncul di nilai batas (minimum dan maksimum). Teknik ini fokus menguji nilai-nilai tersebut.</p>
+<p>Contoh: Field umur harus antara 18-60 tahun. BVA akan menguji: 17, 18, 19 (batas bawah) dan 59, 60, 61 (batas atas).</p>
+<p><strong>2. <span class="term" data-term="equivalence partitioning">Equivalence Partitioning</span> (EP)</strong><br>
+Membagi input menjadi kelompok yang "setara" — jika satu nilai dari kelompok berhasil/gagal, anggota lain dalam kelompok pun sama.</p>
+<p>Contoh: Field umur 18-60. Ada 3 partisi: kurang dari 18 (invalid), 18-60 (valid), lebih dari 60 (invalid). Cukup test satu nilai dari masing-masing partisi.</p>
+<p><strong>3. Decision Table Testing</strong><br>
+Berguna untuk kondisi logika yang kompleks dengan banyak kombinasi input. Membuat tabel semua kombinasi kondisi dan aksi yang diharapkan.</p>
+<p>Kombinasi BVA + EP sangat efektif untuk mengurangi jumlah test case sambil tetap mempertahankan <span class="term" data-term="test coverage">test coverage</span> yang baik.</p>`,
+        quiz: [
+          {
+            q: "Field password harus 8-20 karakter. Menggunakan BVA, nilai mana yang HARUS diuji?",
+            options: ["Hanya 8 dan 20", "7, 8, 9, 19, 20, 21", "10, 15, 20", "5, 8, 20, 25"],
+            answer: 1,
+            explain: "BVA menguji nilai tepat di batas (8, 20), satu di bawah batas (7, 19), dan satu di atas batas (9, 21). Nilai 7, 8, 9 untuk batas bawah dan 19, 20, 21 untuk batas atas."
+          },
+          {
+            q: "Untuk field usia 18-60 tahun, dengan Equivalence Partitioning ada berapa partisi yang terbentuk?",
+            options: ["1 partisi (hanya yang valid)", "2 partisi (valid dan invalid)", "3 partisi (kurang dari 18, 18-60, lebih dari 60)", "4 partisi"],
+            answer: 2,
+            explain: "EP membagi input menjadi: 1) Invalid - kurang dari 18, 2) Valid - antara 18-60, 3) Invalid - lebih dari 60. Cukup test satu nilai dari masing-masing partisi."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "tools-automation",
+    icon: "⚙️",
+    color: "#60a5fa",
+    title: "Tools & Automation",
+    desc: "Alat bantu testing dan otomatisasi dalam QA",
+    parts: [
+      {
+        id: "p1",
+        title: "Manual vs Automation Testing",
+        readTime: "4 menit",
+        material: `<p>Salah satu pertanyaan umum: "Kapan harus manual, kapan harus automation?" Keduanya punya peran masing-masing dan saling melengkapi.</p>
+<p><strong>🖐 <span class="term" data-term="manual testing">Manual Testing</span></strong></p>
+<ul>
+  <li>Dilakukan langsung oleh manusia tanpa tools otomatis</li>
+  <li>Cocok untuk: exploratory testing, UI/UX testing, skenario yang jarang berubah, pengujian satu kali</li>
+  <li>Kelebihan: Lebih fleksibel, bisa mendeteksi masalah UX yang sulit diautomasi</li>
+  <li>Kekurangan: Lambat untuk test berulang, rentan human error</li>
+</ul>
+<p><strong>🤖 <span class="term" data-term="automation testing">Automation Testing</span></strong></p>
+<ul>
+  <li>Menggunakan <span class="term" data-term="test script">test script</span> untuk menjalankan test secara otomatis</li>
+  <li>Cocok untuk: regression testing, test yang sering diulang, load testing, <span class="term" data-term="CI/CD">CI/CD</span> pipeline</li>
+  <li>Kelebihan: Cepat, konsisten, bisa dijalankan kapan saja</li>
+  <li>Kekurangan: Butuh investasi awal (waktu dan skill), maintenance script</li>
+</ul>
+<p>Rule of thumb: <strong>Automate what's repetitive, manually test what's exploratory.</strong></p>
+<p>Tools populer untuk automation: <span class="term" data-term="Selenium">Selenium</span> (web), Cypress (web modern), Appium (mobile), Postman (API testing).</p>`,
+        quiz: [
+          {
+            q: "Tim QA perlu menjalankan 500 test case regression setiap malam sebelum deployment. Pendekatan mana yang paling tepat?",
+            options: ["Manual Testing karena lebih teliti", "Automation Testing karena efisiensi dan konsistensi", "UAT karena melibatkan pengguna", "Exploratory Testing karena lebih fleksibel"],
+            answer: 1,
+            explain: "Regression testing yang dijalankan berulang setiap malam adalah kandidat sempurna untuk automation. Manual testing untuk 500 test case setiap malam tidak praktis dan rentan terhadap human error karena kelelahan."
+          },
+          {
+            q: "QA baru mendapatkan fitur checkout yang baru selesai dibuat. Dia ingin menemukan bug yang tidak terduga dengan bebas menjelajahi fitur tersebut. Ini adalah?",
+            options: ["Automation Testing", "Regression Testing", "Exploratory Testing", "Performance Testing"],
+            answer: 2,
+            explain: "Exploratory Testing adalah pendekatan manual tanpa skrip kaku di mana tester menggunakan kreativitas dan pengalaman untuk menjelajahi aplikasi dan menemukan bug yang tidak terpikirkan sebelumnya."
+          }
+        ]
+      },
+      {
+        id: "p2",
+        title: "API Testing & Tools",
+        readTime: "4 menit",
+        material: `<p><span class="term" data-term="API testing">API testing</span> semakin penting karena arsitektur modern memisahkan frontend dan backend melalui API. QA yang bisa melakukan API testing sangat dicari.</p>
+<p><strong>Mengapa API testing penting?</strong></p>
+<ul>
+  <li>Lebih cepat dari UI testing — bisa test logic tanpa perlu UI selesai</li>
+  <li>Lebih stabil — API berubah lebih jarang dari UI</li>
+  <li>Bisa test <span class="term" data-term="security testing">security</span>, performa, dan edge cases yang sulit di UI</li>
+  <li>Cocok untuk <span class="term" data-term="automation testing">automation testing</span></li>
+</ul>
+<p><strong>Tools Populer QA:</strong></p>
+<ul>
+  <li><strong>Postman</strong> — Tool API testing yang user-friendly, bisa manual dan automation</li>
+  <li><strong><span class="term" data-term="Selenium">Selenium</span></strong> — Framework automation web testing paling populer</li>
+  <li><strong>Cypress</strong> — Framework modern untuk web automation, developer-friendly</li>
+  <li><strong><span class="term" data-term="Jira">Jira</span></strong> — Bug tracking dan project management</li>
+  <li><strong>TestRail</strong> — Platform manajemen test case dan test execution</li>
+</ul>
+<p>Di era <span class="term" data-term="Agile">Agile</span> dan <span class="term" data-term="CI/CD">CI/CD</span>, automation test sering diintegrasikan ke pipeline sehingga test berjalan otomatis setiap kali ada kode baru yang di-push ke repository.</p>`,
+        quiz: [
+          {
+            q: "Mengapa API testing dianggap lebih stabil dibanding UI testing untuk automation?",
+            options: ["Karena API lebih mudah ditulis scriptnya", "Karena API jarang berubah dibanding UI yang sering diupdate tampilannya", "Karena API tidak perlu internet", "Karena API lebih murah"],
+            answer: 1,
+            explain: "UI sering berubah karena redesign, perubahan layout, atau update visual — yang dapat merusak test script. API cenderung lebih stabil dan tidak sering berubah, membuat automation test-nya lebih tahan lama."
+          },
+          {
+            q: "Tool mana yang paling tepat digunakan untuk melacak dan mengelola bug yang ditemukan selama testing?",
+            options: ["Selenium", "Postman", "Jira", "Cypress"],
+            answer: 2,
+            explain: "Jira adalah tool manajemen proyek dan bug tracking yang paling populer digunakan tim QA untuk melaporkan, mengelola, dan melacak status defect selama siklus pengembangan."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "metrics-agile",
+    icon: "📊",
+    color: "#fb7185",
+    title: "Metrics & Agile QA",
+    desc: "Pengukuran kualitas dan QA dalam metodologi Agile",
+    parts: [
+      {
+        id: "p1",
+        title: "Metrics Kualitas",
+        readTime: "4 menit",
+        material: `<p>Bagaimana kita tahu kualitas software kita sudah baik? Jawabannya: dengan mengukur menggunakan <strong>metrics</strong> yang tepat.</p>
+<p>Metrics QA yang penting:</p>
+<ul>
+  <li><span class="term" data-term="test coverage">Test Coverage</span> — % kode atau fitur yang sudah dicakup test. Target minimum biasanya 80%.</li>
+  <li><span class="term" data-term="defect density">Defect Density</span> — Jumlah defect per 1000 baris kode. Makin rendah makin baik.</li>
+  <li><strong>Defect Leakage</strong> — % bug yang lolos ke production tanpa terdeteksi saat testing. Harus serendah mungkin!</li>
+  <li><strong>Pass Rate</strong> — % test case yang berhasil di-pass dari total yang dijalankan.</li>
+  <li><span class="term" data-term="MTTR">MTTR</span> — Rata-rata waktu untuk memperbaiki defect. Indikator efisiensi tim developer.</li>
+</ul>
+<p>Metrics membantu tim membuat keputusan berbasis data, misalnya: "Apakah kita sudah cukup siap untuk release?" atau "Di area mana saja bug paling banyak ditemukan?"</p>
+<p>Ingat: Metrics adalah alat bantu, bukan tujuan. Jangan sampai tim hanya mengejar angka test coverage tanpa memastikan test-nya bermakna.</p>`,
+        quiz: [
+          {
+            q: "Setelah release, tim menemukan 5 bug critical di production yang tidak terdeteksi saat testing. Ini mencerminkan metric apa yang buruk?",
+            options: ["Test Coverage yang tinggi", "Defect Leakage yang tinggi", "MTTR yang rendah", "Defect Density yang rendah"],
+            answer: 1,
+            explain: "Defect Leakage mengukur persentase bug yang 'bocor' ke production tanpa terdeteksi oleh tim QA. Bug critical yang lolos ke production menunjukkan Defect Leakage yang tinggi — ini indikator kualitas testing yang buruk."
+          },
+          {
+            q: "Tim QA melaporkan test coverage 95% tapi user masih banyak menemukan bug. Apa kemungkinan penyebabnya?",
+            options: ["Coverage 95% selalu berarti kualitas yang sangat baik", "Test case-nya mungkin tidak bermakna atau tidak menguji skenario yang tepat", "95% terlalu rendah, harus 100%", "User yang terlalu cerewet"],
+            answer: 1,
+            explain: "Coverage tinggi tidak otomatis berarti kualitas tinggi jika test case-nya hanya mengejar angka tanpa menguji skenario nyata yang bermakna. Test coverage adalah indikator kuantitatif, bukan jaminan kualitas."
+          }
+        ]
+      },
+      {
+        id: "p2",
+        title: "QA dalam Agile",
+        readTime: "4 menit",
+        material: `<p>Metodologi <span class="term" data-term="Agile">Agile</span> mengubah cara kerja QA secara fundamental. QA bukan lagi fase terpisah di akhir — melainkan terintegrasi dalam setiap <span class="term" data-term="sprint">sprint</span>.</p>
+<p><strong>Perbedaan QA di Waterfall vs Agile:</strong></p>
+<ul>
+  <li><strong>Waterfall</strong>: Testing dilakukan setelah development selesai (bisa berbulan-bulan setelah coding dimulai)</li>
+  <li><strong>Agile</strong>: Testing dilakukan dalam sprint yang sama dengan development (1-2 minggu)</li>
+</ul>
+<p><strong>Peran QA dalam Agile Sprint:</strong></p>
+<ul>
+  <li>Ikut dalam sprint planning untuk memahami user story dan membuat acceptance criteria</li>
+  <li>Menulis test case paralel dengan developer yang coding</li>
+  <li>Testing berlangsung dalam sprint, bukan setelah sprint</li>
+  <li>QA berkolaborasi erat dengan developer untuk fix bug secepat mungkin</li>
+  <li>Berkontribusi dalam sprint review dan retrospective</li>
+</ul>
+<p>Di Agile modern, ada konsep <strong>"Shift-Left Testing"</strong> — memindahkan aktivitas QA seawal mungkin, bahkan sebelum kode ditulis. Dan <span class="term" data-term="CI/CD">CI/CD</span> memungkinkan automated test berjalan otomatis setiap ada perubahan kode.</p>
+<p><span class="term" data-term="traceability matrix">Traceability Matrix</span> tetap penting di Agile untuk memastikan setiap user story sudah memiliki test coverage yang cukup.</p>`,
+        quiz: [
+          {
+            q: "Dalam tim Agile, kapan sebaiknya QA mulai menulis test case untuk sebuah fitur?",
+            options: ["Setelah semua fitur sprint selesai dikembangkan", "Setelah sprint selesai dan masuk fase testing", "Paralel dengan developer yang sedang coding, dalam sprint yang sama", "Hanya di sprint terakhir sebelum release"],
+            answer: 2,
+            explain: "Di Agile, QA bekerja paralel dengan developer dalam sprint yang sama. QA bisa mulai menulis test case begitu user story dipahami, sehingga testing bisa langsung dilakukan saat feature selesai dikoding."
+          },
+          {
+            q: "Apa yang dimaksud dengan 'Shift-Left Testing' dalam konteks Agile?",
+            options: ["Testing hanya dilakukan di sisi kiri layar", "Memindahkan aktivitas QA seawal mungkin dalam siklus pengembangan", "Mengurangi jumlah test case", "Testing hanya oleh developer, bukan QA"],
+            answer: 1,
+            explain: "Shift-Left Testing berarti memulai aktivitas QA sedini mungkin — mulai dari review requirement, desain, hingga kode — bukan menunggu sampai development selesai. Tujuannya untuk menemukan masalah lebih awal ketika biaya perbaikannya masih murah."
+          }
+        ]
+      }
+    ]
+  }
+];
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+let state = {
+  view: 'welcome',    // 'welcome' | 'part'
+  catIdx: 0,
+  partIdx: 0,
+  quizAnswers: {},    // key: `${catIdx}-${partIdx}-${qIdx}`, val: chosen idx
+  quizDone: {},       // key: `${catIdx}-${partIdx}`, val: true
+  completedParts: {}  // key: `${catIdx}-${partIdx}`, val: true
+};
+
+// ═══════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════
+function renderAll() {
+  renderSidebar();
+  renderMain();
+  updateProgress();
+}
+
+function renderSidebar() {
+  const el = document.getElementById('nav-cats');
+  el.innerHTML = '';
+  CATEGORIES.forEach((cat, ci) => {
+    const allDone = cat.parts.every((_, pi) => state.completedParts[`${ci}-${pi}`]);
+    const isOpenCat = state.catIdx === ci && state.view === 'part';
+    const group = document.createElement('div');
+    group.className = 'cat-group';
+    group.innerHTML = `
+      <button class="cat-btn${isOpenCat ? ' active open' : ''}" onclick="toggleCat(${ci})">
+        <span class="cat-icon" style="background:${cat.color}22">${cat.icon}</span>
+        <span style="flex:1">${cat.title}</span>
+        ${allDone ? `<span class="cat-done-badge">✓</span>` : ''}
+        <span class="cat-chevron">›</span>
+      </button>
+      <div class="parts-list${isOpenCat ? ' open' : ''}">
+        ${cat.parts.map((p, pi) => {
+          const done = state.completedParts[`${ci}-${pi}`];
+          const active = state.catIdx === ci && state.partIdx === pi && state.view === 'part';
+          return `<button class="part-btn${active ? ' active' : ''}" onclick="goTo(${ci},${pi})">
+            ${p.title}${done ? ' <span class="done-badge">✓</span>' : ''}
+          </button>`;
+        }).join('')}
+      </div>
+    `;
+    el.appendChild(group);
+  });
+}
+
+function toggleCat(ci) {
+  if (state.catIdx === ci && state.view === 'part') {
+    state.view = 'welcome';
+  } else {
+    state.catIdx = ci;
+    state.partIdx = 0;
+    state.view = 'part';
+  }
+  renderAll();
+}
+
+function goTo(ci, pi) {
+  state.catIdx = ci;
+  state.partIdx = pi;
+  state.view = 'part';
+  renderAll();
+  document.getElementById('main-panel').scrollTop = 0;
+}
+
+function renderMain() {
+  const el = document.getElementById('main-panel');
+  if (state.view === 'welcome') {
+    renderWelcome(el);
+  } else {
+    renderPart(el);
+  }
+}
+
+function renderWelcome(el) {
+  el.innerHTML = `
+    <div class="welcome-screen">
+      <div class="big-title">Belajar SQA<br>dari Nol</div>
+      <p class="sub">Materi Software Quality Assurance yang singkat, padat, dan interaktif. Kalimat teknis punya highlight — klik untuk lihat definisinya. Quiz di akhir setiap materi membantu kamu benar-benar paham.</p>
+      <div class="feature-grid">
+        <div class="feat-card">
+          <div class="icon">🔍</div>
+          <strong>Highlight Istilah</strong>
+          <p>Klik kata yang digarisbawahi untuk langsung lihat definisi dan konteksnya.</p>
+        </div>
+        <div class="feat-card">
+          <div class="icon">⚡</div>
+          <strong>Materi Singkat</strong>
+          <p>Setiap part dirancang selesai dalam 3-5 menit — padat dan to the point.</p>
+        </div>
+        <div class="feat-card">
+          <div class="icon">🧠</div>
+          <strong>Quiz Interaktif</strong>
+          <p>Quiz di akhir tiap materi dengan feedback langsung untuk cek pemahaman.</p>
+        </div>
+        <div class="feat-card">
+          <div class="icon">📈</div>
+          <strong>Track Progress</strong>
+          <p>Pantau kemajuan belajarmu lewat progress bar di sidebar.</p>
+        </div>
+      </div>
+      <button class="start-btn" onclick="goTo(0,0)">Mulai Belajar →</button>
+    </div>
+  `;
+}
+
+function renderPart(el) {
+  const cat = CATEGORIES[state.catIdx];
+  const part = cat.parts[state.partIdx];
+  const quizKey = `${state.catIdx}-${state.partIdx}`;
+  const totalParts = CATEGORIES.reduce((s,c) => s + c.parts.length, 0);
+  const passedCount = Object.keys(state.completedParts).length;
+
+  // Nav arrows
+  const flatList = [];
+  CATEGORIES.forEach((c, ci) => c.parts.forEach((_, pi) => flatList.push({ci, pi})));
+  const flatIdx = flatList.findIndex(x => x.ci === state.catIdx && x.pi === state.partIdx);
+  const prev = flatList[flatIdx - 1];
+  const next = flatList[flatIdx + 1];
+
+  // Quiz HTML
+  const quizHtml = part.quiz.map((q, qi) => {
+    const ansKey = `${quizKey}-${qi}`;
+    const chosen = state.quizAnswers[ansKey];
+    const answered = chosen !== undefined;
+    const correct = chosen === q.answer;
+    return `
+      <div class="quiz-card${answered ? ' answered' : ''}" id="qcard-${qi}">
+        <div class="quiz-q"><span class="q-num">Q${qi+1}</span>${q.q}</div>
+        <div class="options">
+          ${q.options.map((opt, oi) => {
+            let cls = '';
+            if (answered) {
+              if (oi === q.answer) cls = ' correct';
+              else if (oi === chosen && !correct) cls = ' wrong';
+            }
+            return `<button class="option-btn${cls}" ${answered ? 'disabled' : ''} onclick="answerQuiz(${qi},${oi})">
+              <span class="opt-circle">${String.fromCharCode(65+oi)}</span>
+              ${opt}
+            </button>`;
+          }).join('')}
+        </div>
+        <div class="quiz-feedback${answered ? ' show' : ''} ${answered && correct ? 'ok' : 'no'}" id="qfb-${qi}">
+          ${answered ? (correct ? '✓ Benar! ' : '✗ Kurang tepat. ') + q.explain : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Score banner
+  const doneQuestions = part.quiz.filter((_, qi) => state.quizAnswers[`${quizKey}-${qi}`] !== undefined).length;
+  const correctCount = part.quiz.filter((q, qi) => state.quizAnswers[`${quizKey}-${qi}`] === q.answer).length;
+  const allAnswered = doneQuestions === part.quiz.length;
+  const scoreClass = correctCount / part.quiz.length >= 0.8 ? 'great' : correctCount / part.quiz.length >= 0.5 ? 'ok' : 'poor';
+  const msgs = ['Terus berlatih! Pelajari kembali materinya 💪', 'Lumayan! Beberapa konsep perlu didalami lagi 📖', 'Bagus sekali! Kamu paham materi ini dengan baik 🎉'];
+  const msgIdx = correctCount / part.quiz.length >= 0.8 ? 2 : correctCount / part.quiz.length >= 0.5 ? 1 : 0;
+
+  el.innerHTML = `
+    <div class="page-header">
+      <div class="breadcrumb">${cat.icon} ${cat.title} <span>›</span> Part ${state.partIdx + 1}</div>
+      <h2>${part.title}</h2>
+      <div class="meta">
+        <span class="tag tag-level">👋 Pemula</span>
+        <span class="tag tag-time">⏱ ${part.readTime}</span>
+        <span class="tag tag-cat">${cat.title}</span>
+      </div>
+    </div>
+    <div class="content-area">
+      <div class="legend-bar">
+        <strong>Highlight:</strong>
+        <span class="legend-dot"><span class="ld" style="background:#8b7cf8"></span> Konsep</span>
+        <span class="legend-dot"><span class="ld" style="background:#34d399"></span> Proses</span>
+        <span class="legend-dot"><span class="ld" style="background:#60a5fa"></span> Tools</span>
+        <span class="legend-dot"><span class="ld" style="background:#f5c842"></span> Metrik</span>
+        <span class="legend-dot"><span class="ld" style="background:#fb7185"></span> Error/Defect</span>
+        <span style="color:var(--text3);font-size:11.5px;margin-left:4px">← Klik untuk definisi</span>
+      </div>
+
+      <div class="part-header">
+        <span class="part-num">PART ${state.partIdx + 1}</span>
+        <span class="part-title">${part.title}</span>
+      </div>
+
+      <div class="material-card">${highlightTerms(part.material)}</div>
+
+      <div class="quiz-section">
+        <div class="quiz-header">
+          <div class="quiz-icon">🧠</div>
+          <div>
+            <h3>Quiz Pemahaman</h3>
+            <p>${part.quiz.length} pertanyaan · Klik jawaban untuk cek langsung</p>
+          </div>
+        </div>
+        ${quizHtml}
+        <div class="score-banner${allAnswered ? ' show' : ''}" id="score-banner">
+          <div class="score-big ${scoreClass}">${correctCount}/${part.quiz.length}</div>
+          <div class="score-meta">
+            <strong>${msgs[msgIdx]}</strong>
+            <p>${correctCount} dari ${part.quiz.length} pertanyaan dijawab benar</p>
+          </div>
+          <button class="retry-btn" onclick="retryQuiz()">Coba Lagi</button>
+        </div>
+      </div>
+
+      <div class="part-nav">
+        ${prev ? `<button class="nav-btn" onclick="goTo(${prev.ci},${prev.pi})">← Sebelumnya</button>` : '<span></span>'}
+        ${next ? `<button class="nav-btn primary" onclick="goToNext(${next.ci},${next.pi})">Berikutnya →</button>` : `<button class="nav-btn primary" onclick="goWelcome()">🎉 Selesai Semua!</button>`}
+      </div>
+    </div>
+  `;
+
+  // Attach term click listeners
+  el.querySelectorAll('.term').forEach(span => {
+    span.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showTooltip(e, span.dataset.term);
+    });
+  });
+}
+
+function goToNext(ci, pi) {
+  const key = `${state.catIdx}-${state.partIdx}`;
+  state.completedParts[key] = true;
+  goTo(ci, pi);
+}
+
+function goWelcome() {
+  const key = `${state.catIdx}-${state.partIdx}`;
+  state.completedParts[key] = true;
+  state.view = 'welcome';
+  renderAll();
+}
+
+function highlightTerms(html) {
+  let result = html;
+  // Already has .term spans — preserve them, just make sure data-type is set
+  // Replace any remaining plain term mentions that aren't already wrapped
+  return result.replace(/data-term="([^"]+)"/g, (match, term) => {
+    const info = GLOSSARY[term];
+    const type = info ? info.type : 'concept';
+    return `data-term="${term}" data-type="${type}"`;
+  });
+}
+
+// ═══════════════════════════════════════════════
+// QUIZ
+// ═══════════════════════════════════════════════
+function answerQuiz(qi, chosen) {
+  const key = `${state.catIdx}-${state.partIdx}-${qi}`;
+  if (state.quizAnswers[key] !== undefined) return;
+  state.quizAnswers[key] = chosen;
+
+  // Re-render quiz card only
+  const cat = CATEGORIES[state.catIdx];
+  const part = cat.parts[state.partIdx];
+  const q = part.quiz[qi];
+  const correct = chosen === q.answer;
+
+  const card = document.getElementById(`qcard-${qi}`);
+  card.classList.add('answered');
+  card.querySelectorAll('.option-btn').forEach((btn, oi) => {
+    btn.disabled = true;
+    if (oi === q.answer) btn.classList.add('correct');
+    else if (oi === chosen && !correct) btn.classList.add('wrong');
+  });
+  const fb = document.getElementById(`qfb-${qi}`);
+  fb.classList.add('show', correct ? 'ok' : 'no');
+  fb.textContent = (correct ? '✓ Benar! ' : '✗ Kurang tepat. ') + q.explain;
+
+  // Check if all answered
+  const quizKey = `${state.catIdx}-${state.partIdx}`;
+  const allAnswered = part.quiz.every((_, i) => state.quizAnswers[`${quizKey}-${i}`] !== undefined);
+  if (allAnswered) {
+    const correctCount = part.quiz.filter((qq, i) => state.quizAnswers[`${quizKey}-${i}`] === qq.answer).length;
+    const banner = document.getElementById('score-banner');
+    if (banner) {
+      banner.classList.add('show');
+      const scoreClass = correctCount / part.quiz.length >= 0.8 ? 'great' : correctCount / part.quiz.length >= 0.5 ? 'ok' : 'poor';
+      const msgs = ['Terus berlatih! Pelajari kembali materinya 💪', 'Lumayan! Beberapa konsep perlu didalami lagi 📖', 'Bagus sekali! Kamu paham materi ini dengan baik 🎉'];
+      const msgIdx = correctCount / part.quiz.length >= 0.8 ? 2 : correctCount / part.quiz.length >= 0.5 ? 1 : 0;
+      banner.querySelector('.score-big').className = `score-big ${scoreClass}`;
+      banner.querySelector('.score-big').textContent = `${correctCount}/${part.quiz.length}`;
+      banner.querySelector('.score-meta strong').textContent = msgs[msgIdx];
+      banner.querySelector('.score-meta p').textContent = `${correctCount} dari ${part.quiz.length} pertanyaan dijawab benar`;
+      if (correctCount === part.quiz.length) {
+        state.completedParts[`${state.catIdx}-${state.partIdx}`] = true;
+        updateProgress();
+        renderSidebar();
+      }
+    }
+  }
+}
+
+function retryQuiz() {
+  const quizKey = `${state.catIdx}-${state.partIdx}`;
+  const part = CATEGORIES[state.catIdx].parts[state.partIdx];
+  part.quiz.forEach((_, qi) => {
+    delete state.quizAnswers[`${quizKey}-${qi}`];
+  });
+  renderMain();
+}
+
+// ═══════════════════════════════════════════════
+// TOOLTIP
+// ═══════════════════════════════════════════════
+const tooltip = document.getElementById('tooltip');
+let tooltipVisible = false;
+
+function showTooltip(e, term) {
+  const info = GLOSSARY[term];
+  if (!info) return;
+
+  const typeLabels = { concept: 'Konsep', process: 'Proses', tool: 'Tool', metric: 'Metrik', error: 'Error/Defect' };
+  document.getElementById('tt-type').textContent = typeLabels[info.type] || 'Konsep';
+  document.getElementById('tt-type').className = `tooltip-label ${info.type}`;
+  document.getElementById('tt-term').textContent = term;
+  document.getElementById('tt-def').textContent = info.def;
+
+  const rect = e.target.getBoundingClientRect();
+  let top = rect.bottom + 10;
+  let left = rect.left;
+
+  // Prevent overflow
+  const tw = 300;
+  if (left + tw > window.innerWidth - 16) left = window.innerWidth - tw - 16;
+  if (top + 160 > window.innerHeight) top = rect.top - 170;
+
+  tooltip.style.top = top + 'px';
+  tooltip.style.left = left + 'px';
+  tooltip.classList.add('show');
+  tooltipVisible = true;
+}
+
+document.addEventListener('click', (e) => {
+  if (tooltipVisible && !e.target.classList.contains('term')) {
+    tooltip.classList.remove('show');
+    tooltipVisible = false;
+  }
+});
+
+// ═══════════════════════════════════════════════
+// PROGRESS
+// ═══════════════════════════════════════════════
+function updateProgress() {
+  const total = CATEGORIES.reduce((s, c) => s + c.parts.length, 0);
+  const done = Object.keys(state.completedParts).length;
+  const pct = Math.round(done / total * 100);
+  document.getElementById('prog-bar').style.width = pct + '%';
+  document.getElementById('prog-txt').textContent = pct + '%';
+}
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+renderAll();
+</script>
+</body>
+</html>
