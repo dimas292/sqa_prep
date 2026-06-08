@@ -198,6 +198,26 @@
     margin-bottom: 4px;
     font-weight: 500;
   }
+  .reset-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 7px 12px;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    color: var(--text3);
+    font-family: var(--font-body);
+    font-size: 11.5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .15s;
+    text-align: center;
+  }
+  .reset-btn:hover {
+    background: var(--coral-bg);
+    border-color: rgba(232,64,74,.25);
+    color: var(--coral);
+  }
 
   /* ── PAGE HEADER ── */
   .page-header {
@@ -575,8 +595,16 @@
     font-weight: 500;
   }
   .quiz-feedback.show { display: block; }
-  .quiz-feedback.ok { background: var(--teal-bg); border: 1px solid rgba(10,171,124,.2); color: var(--teal); }
-  .quiz-feedback.no { background: var(--coral-bg); border: 1px solid rgba(232,64,74,.18); color: var(--coral); }
+  .quiz-feedback.ok {
+    background: #f0fdf4;
+    border: 1.5px solid #86efac;
+    color: #15803d;
+  }
+  .quiz-feedback.no {
+    background: #fff1f2;
+    border: 1.5px solid #fca5a5;
+    color: #b91c1c;
+  }
 
   /* ── ESAI SOAL ── */
   .esai-card {
@@ -602,35 +630,158 @@
   }
   .esai-q { font-size: 14.5px; color: var(--text); line-height: 1.75; font-weight: 500; }
 
-  /* ── KUNCI SECTION ── */
-  .kunci-section {
+  /* ── KUNCI ACCORDION ── */
+  .kunci-accordion {
     margin-top: 8px;
-  }
-  .kunci-card {
-    background: linear-gradient(135deg, #f0fff8 0%, #f5f9ff 100%);
-    border: 1px solid rgba(10,171,124,.18);
+    border: 1.5px solid rgba(10,171,124,.22);
     border-radius: var(--r2);
-    padding: 24px 28px;
+    overflow: hidden;
     box-shadow: var(--shadow);
   }
-  .kunci-card h4 {
+  .kunci-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #f0fff8 0%, #f0f4ff 100%);
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: background .18s;
+    font-family: var(--font-body);
+  }
+  .kunci-toggle:hover { background: linear-gradient(135deg, #e2fff4 0%, #e8edff 100%); }
+  .kunci-toggle-icon {
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    background: var(--teal-bg);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .kunci-toggle-label { flex: 1; }
+  .kunci-toggle-label strong {
+    display: block;
     font-family: var(--font-head);
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 700;
-    color: var(--teal);
-    margin: 16px 0 8px;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .kunci-toggle-label span {
+    font-size: 11.5px;
+    color: var(--text3);
+    font-weight: 500;
+  }
+  .kunci-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-head);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    transition: all .18s;
+    flex-shrink: 0;
   }
-  .kunci-card h4:first-child { margin-top: 0; }
-  .kunci-card p, .kunci-card li {
-    font-size: 14.5px;
+  .kunci-status.closed {
+    background: var(--bg3);
+    color: var(--text3);
+    border: 1px solid var(--border);
+  }
+  .kunci-status.opened {
+    background: var(--teal-bg);
+    color: var(--teal);
+    border: 1px solid rgba(10,171,124,.2);
+  }
+  .kunci-chevron {
+    font-size: 11px;
+    color: var(--text3);
+    transition: transform .25s ease;
+    flex-shrink: 0;
+  }
+  .kunci-chevron.open { transform: rotate(90deg); }
+  .kunci-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .35s ease;
+    background: var(--bg2);
+  }
+  .kunci-body.open { max-height: 9999px; }
+  .kunci-inner {
+    padding: 22px 24px 24px;
+    border-top: 1px solid rgba(10,171,124,.12);
+  }
+  .kunci-group {
+    margin-bottom: 20px;
+  }
+  .kunci-group:last-child { margin-bottom: 0; }
+  .kunci-group-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .kunci-group-badge {
+    font-family: var(--font-head);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+  }
+  .kunci-group-badge.pg {
+    background: var(--accent-bg);
+    color: var(--accent);
+    border: 1px solid rgba(91,76,219,.15);
+  }
+  .kunci-group-badge.esai {
+    background: var(--sky-bg);
+    color: var(--sky);
+    border: 1px solid rgba(42,126,232,.15);
+  }
+  .kunci-group-title {
+    font-family: var(--font-head);
+    font-size: 12.5px;
+    font-weight: 700;
     color: var(--text2);
-    line-height: 1.85;
-    margin-bottom: 10px;
   }
-  .kunci-card ul { padding-left: 20px; }
-  .kunci-card strong { color: var(--text); font-weight: 700; }
+  .kunci-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 14px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.75;
+    align-items: flex-start;
+  }
+  .kunci-item:last-child { margin-bottom: 0; }
+  .kunci-item-num {
+    font-family: var(--font-head);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    color: var(--text3);
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    text-transform: uppercase;
+  }
+  .kunci-item strong { color: var(--text); font-weight: 600; }
 
   /* ── SCORE BANNER ── */
   .score-banner {
@@ -736,69 +887,7 @@
   }
   .nav-btn.primary:hover { opacity: 0.9; transform: translateY(-1px); }
 
-  /* ── WELCOME ── */
-  .welcome-screen { padding: 48px 44px; max-width: 720px; }
-  .welcome-screen .big-title {
-    font-family: var(--font-head);
-    font-size: 38px;
-    font-weight: 800;
-    line-height: 1.2;
-    margin-bottom: 14px;
-    background: linear-gradient(135deg, var(--text) 0%, var(--accent2) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .welcome-screen .sub {
-    color: var(--text2);
-    font-size: 15.5px;
-    margin-bottom: 36px;
-    line-height: 1.85;
-    max-width: 560px;
-  }
-  .feature-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin-bottom: 36px;
-  }
-  .feat-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: var(--r2);
-    padding: 20px 22px;
-    box-shadow: var(--shadow);
-    transition: transform .15s, box-shadow .15s;
-  }
-  .feat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
-  .feat-card .icon { font-size: 24px; margin-bottom: 10px; }
-  .feat-card strong {
-    display: block;
-    font-family: var(--font-head);
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 5px;
-  }
-  .feat-card p { font-size: 13px; color: var(--text3); line-height: 1.6; }
-  .start-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 28px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    border: none;
-    border-radius: 10px;
-    color: #fff;
-    font-family: var(--font-body);
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: opacity .15s, transform .15s;
-    letter-spacing: 0.2px;
-    box-shadow: 0 4px 18px rgba(91,76,219,.35);
-  }
-  .start-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
 
   /* scrollbar */
   ::-webkit-scrollbar { width: 5px; }
@@ -851,12 +940,53 @@
 
   @media (max-width: 700px) {
     .sidebar { display: none; }
-    .content-area, .welcome-screen { padding: 20px 18px 48px; }
+    .content-area { padding: 20px 18px 48px; }
     .page-header { padding: 22px 18px; }
-    .feature-grid { grid-template-columns: 1fr; }
-    .welcome-screen .big-title { font-size: 26px; }
   }
+
+  /* ── MERMAID DIAGRAM ── */
+  .mermaid-wrap {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--r2);
+    padding: 22px 16px 16px;
+    margin: 18px 0;
+    box-shadow: var(--shadow);
+    overflow-x: auto;
+  }
+  .mermaid-label {
+    font-family: var(--font-head);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--text3);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .mermaid svg { max-width: 100%; height: auto; }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'base',
+    themeVariables: {
+      primaryColor: '#eceef8',
+      primaryTextColor: '#1a1835',
+      primaryBorderColor: '#5b4cdb',
+      lineColor: '#8a87ac',
+      secondaryColor: '#f0f1f7',
+      tertiaryColor: '#f5f6fa',
+      fontFamily: 'Inter, sans-serif',
+      fontSize: '13px',
+      edgeLabelBackground: '#ffffff'
+    },
+    flowchart: { curve: 'basis', padding: 18 }
+  });
+</script>
 </head>
 <body>
 
@@ -880,6 +1010,9 @@
       <div class="progress-bar-wrap">
         <div class="progress-bar-fill" id="prog-bar"></div>
       </div>
+      <button class="reset-btn" onclick="resetProgress()" title="Reset semua progress dan jawaban">
+        🔄 Reset Progress
+      </button>
     </div>
   </nav>
 
@@ -901,7 +1034,7 @@
 // GLOSSARY
 // ═══════════════════════════════════════════════
 const GLOSSARY = {
-  "SQA": { type: "concept", def: "Software Quality Assurance — proses sistematis memastikan software memenuhi standar kualitas yang ditetapkan sebelum dan selama pengembangan." },
+  "SQA": { type: "concept", def: "Software Quality Assurance, proses sistematis memastikan software memenuhi standar kualitas yang ditetapkan sebelum dan selama pengembangan." },
   "bug": { type: "error", def: "Kesalahan atau cacat pada kode program yang menyebabkan software tidak berjalan sesuai harapan." },
   "defect": { type: "error", def: "Ketidaksesuaian antara perilaku aktual software dengan spesifikasi yang seharusnya." },
   "test case": { type: "process", def: "Dokumen yang mendefinisikan input, kondisi eksekusi, dan hasil yang diharapkan untuk menguji suatu fungsi software." },
@@ -909,38 +1042,38 @@ const GLOSSARY = {
   "regression testing": { type: "process", def: "Pengujian ulang software setelah ada perubahan untuk memastikan tidak ada fungsionalitas yang sebelumnya bekerja menjadi rusak." },
   "unit testing": { type: "process", def: "Pengujian pada unit/komponen terkecil dari software secara independen, biasanya dilakukan oleh developer." },
   "integration testing": { type: "process", def: "Pengujian yang memverifikasi bahwa beberapa unit/modul bekerja dengan benar saat digabungkan." },
-  "black-box testing": { type: "process", def: "Metode pengujian di mana tester tidak mengetahui internal kode — hanya fokus pada input dan output." },
+  "black-box testing": { type: "process", def: "Metode pengujian di mana tester tidak mengetahui internal kode, hanya fokus pada input dan output." },
   "white-box testing": { type: "process", def: "Metode pengujian di mana tester mengetahui struktur internal kode dan menulis test berdasarkan logikanya." },
-  "UAT": { type: "process", def: "User Acceptance Testing — pengujian oleh pengguna akhir untuk memvalidasi software sesuai kebutuhan bisnis sebelum go-live." },
-  "SDLC": { type: "concept", def: "Software Development Life Cycle — tahapan proses pengembangan software dari perencanaan hingga perawatan." },
-  "QA": { type: "concept", def: "Quality Assurance — aktivitas sistematis untuk memastikan proses menghasilkan produk berkualitas." },
-  "QC": { type: "concept", def: "Quality Control — inspeksi dan pengujian produk akhir untuk menemukan defect." },
+  "UAT": { type: "process", def: "User Acceptance Testing, pengujian oleh pengguna akhir untuk memvalidasi software sesuai kebutuhan bisnis sebelum go-live." },
+  "SDLC": { type: "concept", def: "Software Development Life Cycle, tahapan proses pengembangan software dari perencanaan hingga perawatan." },
+  "QA": { type: "concept", def: "Quality Assurance, aktivitas sistematis untuk memastikan proses menghasilkan produk berkualitas." },
+  "QC": { type: "concept", def: "Quality Control, inspeksi dan pengujian produk akhir untuk menemukan defect." },
   "smoke testing": { type: "process", def: "Pengujian cepat untuk memastikan fungsi-fungsi dasar sistem berjalan sebelum masuk ke testing yang lebih detail." },
   "automation testing": { type: "tool", def: "Pengujian menggunakan script/tools otomatis (seperti Selenium, Cypress) untuk menjalankan test case tanpa intervensi manual." },
   "manual testing": { type: "process", def: "Pengujian yang dilakukan secara langsung oleh manusia, tanpa bantuan tools otomatis." },
-  "test coverage": { type: "metric", def: "Persentase kode atau fitur yang sudah dicakup oleh test case — semakin tinggi semakin baik kualitasnya." },
+  "test coverage": { type: "metric", def: "Persentase kode atau fitur yang sudah dicakup oleh test case, semakin tinggi semakin baik kualitasnya." },
   "severity": { type: "metric", def: "Tingkat dampak sebuah defect terhadap fungsionalitas sistem (Critical, Major, Minor, Trivial)." },
   "priority": { type: "metric", def: "Seberapa segera sebuah defect harus diperbaiki berdasarkan kebutuhan bisnis." },
   "test environment": { type: "concept", def: "Konfigurasi hardware dan software yang dipersiapkan khusus untuk melakukan pengujian, terpisah dari production." },
   "bug life cycle": { type: "process", def: "Siklus hidup sebuah bug mulai dari ditemukan (New) → ditugaskan → diperbaiki → diverifikasi → ditutup." },
-  "requirement": { type: "concept", def: "Deskripsi tertulis tentang apa yang harus dilakukan software — fondasi untuk membuat test case." },
+  "requirement": { type: "concept", def: "Deskripsi tertulis tentang apa yang harus dilakukan software, fondasi untuk membuat test case." },
   "performance testing": { type: "process", def: "Pengujian untuk mengevaluasi kecepatan, stabilitas, dan kemampuan sistem di bawah beban kerja tertentu." },
   "security testing": { type: "process", def: "Pengujian untuk menemukan celah keamanan (vulnerabilities) dalam software agar tidak bisa dieksploitasi." },
-  "STLC": { type: "concept", def: "Software Testing Life Cycle — serangkaian fase spesifik dalam proses pengujian software." },
+  "STLC": { type: "concept", def: "Software Testing Life Cycle, serangkaian fase spesifik dalam proses pengujian software." },
   "verification": { type: "concept", def: "Memastikan software dibangun dengan benar sesuai spesifikasi (Are we building the product right?)." },
   "validation": { type: "concept", def: "Memastikan software yang dibangun adalah yang benar dan memenuhi kebutuhan pengguna (Are we building the right product?)." },
-  "exploratory testing": { type: "process", def: "Pengujian tanpa skrip yang sudah ditetapkan — tester bebas mengeksplorasi software secara kreatif untuk menemukan bug." },
+  "exploratory testing": { type: "process", def: "Pengujian tanpa skrip yang sudah ditetapkan, tester bebas mengeksplorasi software secara kreatif untuk menemukan bug." },
   "Selenium": { type: "tool", def: "Framework open-source populer untuk automation testing pada web application menggunakan berbagai bahasa pemrograman." },
   "Jira": { type: "tool", def: "Tool manajemen proyek dan bug tracking yang banyak digunakan tim QA untuk melacak defect dan test activities." },
   "API testing": { type: "process", def: "Pengujian langsung pada Application Programming Interface untuk memvalidasi fungsionalitas, keandalan, dan keamanan." },
   "Agile": { type: "concept", def: "Metodologi pengembangan software iteratif dan kolaboratif, di mana QA bekerja bersama developer sejak awal sprint." },
   "sprint": { type: "concept", def: "Periode waktu singkat (biasanya 1-2 minggu) dalam Agile di mana tim menyelesaikan sekumpulan pekerjaan." },
-  "CI/CD": { type: "tool", def: "Continuous Integration/Continuous Delivery — praktik otomatisasi build, test, dan deployment software secara berkelanjutan." },
-  "defect density": { type: "metric", def: "Jumlah defect per ukuran software (misalnya per 1000 baris kode) — indikator kualitas kode." },
-  "MTTR": { type: "metric", def: "Mean Time To Repair — rata-rata waktu yang dibutuhkan untuk memperbaiki sebuah defect atau kegagalan sistem." },
+  "CI/CD": { type: "tool", def: "Continuous Integration/Continuous Delivery, praktik otomatisasi build, test, dan deployment software secara berkelanjutan." },
+  "defect density": { type: "metric", def: "Jumlah defect per ukuran software (misalnya per 1000 baris kode), indikator kualitas kode." },
+  "MTTR": { type: "metric", def: "Mean Time To Repair, rata-rata waktu yang dibutuhkan untuk memperbaiki sebuah defect atau kegagalan sistem." },
   "boundary value analysis": { type: "process", def: "Teknik test design yang menguji nilai-nilai di batas (minimum, maksimum) dari suatu input." },
   "equivalence partitioning": { type: "process", def: "Teknik membagi data input ke dalam kelas-kelas yang setara agar test case lebih efisien." },
-  "traceability matrix": { type: "tool", def: "Dokumen yang memetakan requirement ke test case — memastikan semua requirement sudah ada test-nya." },
+  "traceability matrix": { type: "tool", def: "Dokumen yang memetakan requirement ke test case, memastikan semua requirement sudah ada test-nya." },
 };
 
 // ═══════════════════════════════════════════════
@@ -959,12 +1092,12 @@ const CATEGORIES = [
         title: "Rekonsiliasi Service Desk, Request, Incident & Problem Management",
         readTime: "5 menit",
         material: `<h3>1. Mengapa Request Management dan Service Desk Digabung?</h3>
-<p>Dalam operasional harian, <strong>Service Desk</strong> bertindak sebagai <em>Single Point of Contact</em> (SPOC) — gerbang utama bagi pengguna. Sementara, <strong>Request Management</strong> adalah prosedur penanganan permintaan pengguna yang sifatnya rutin dan terstandarisasi.</p>
+<p>Dalam operasional harian, <strong>Service Desk</strong> bertindak sebagai <em>Single Point of Contact</em> (SPOC), gerbang utama bagi pengguna. Sementara, <strong>Request Management</strong> adalah prosedur penanganan permintaan pengguna yang sifatnya rutin dan terstandarisasi.</p>
 <p>Penggabungan kedua materi ini dilakukan karena mayoritas aktivitas harian <em>Service Desk</em> adalah menerima dan mengeksekusi <em>Service Request</em>.</p>
 <strong>Evolusi Kerangka Kerja (Framework):</strong>
 <ul>
   <li><strong>ITIL v3 (Versi Sebelumnya):</strong> <em>Request Fulfillment/Management</em> dikategorikan sebagai <strong>Proses</strong>, sedangkan <em>Service Desk</em> dikategorikan sebagai <strong>Fungsi</strong> (tim/organisasi).</li>
-  <li><strong>ITIL 4 (Versi Terbaru):</strong> Dikonsolidasikan — keduanya kini disebut sebagai <strong>Practice (Praktik/Proses)</strong>.</li>
+  <li><strong>ITIL 4 (Versi Terbaru):</strong> Dikonsolidasikan, keduanya kini disebut sebagai <strong>Practice (Praktik/Proses)</strong>.</li>
   <li><em>Catatan Implementasi:</em> Praktik nyata di industri memadukan acuan <strong>ITIL 4</strong>, <strong>ISO 20000</strong>, dan pengalaman empiris untuk menciptakan sistem fleksibel.</li>
 </ul>
 
@@ -977,7 +1110,7 @@ const CATEGORIES = [
 <ul>
   <li><strong>Karakteristik:</strong> <em>Unplanned</em> (Tidak Direncanakan).</li>
   <li><strong>Definisi:</strong> Gangguan tidak direncanakan terhadap layanan TI atau penurunan kualitas layanan yang sedang berjalan.</li>
-  <li><strong>Kasus Khusus (DRC):</strong> Jika ada komponen di <em>Disaster Recovery Center</em> rusak, ini <strong>wajib</strong> dicatat sebagai <strong>Insiden</strong> — kegagalan komponen DRC menurunkan kesiapan sistem secara keseluruhan.</li>
+  <li><strong>Kasus Khusus (DRC):</strong> Jika ada komponen di <em>Disaster Recovery Center</em> rusak, ini <strong>wajib</strong> dicatat sebagai <strong>Insiden</strong>, kegagalan komponen DRC menurunkan kesiapan sistem secara keseluruhan.</li>
 </ul>
 
 <h4>🟡 B. Request Management / Service Request (Permintaan)</h4>
@@ -1016,9 +1149,9 @@ const CATEGORIES = [
 <ol>
   <li><strong>ITSM (IT Service Management):</strong> Metode pengelolaan layanan TI yang berfokus pada keselarasan antara TI dan kebutuhan bisnis.</li>
   <li><strong>ITIL (Information Technology Infrastructure Library):</strong> Kerangka kerja berisi best practice global untuk mengelola layanan TI. Versi terbaru: ITIL 4.</li>
-  <li><strong>ISO 20000:</strong> Standar internasional resmi untuk manajemen layanan TI — tolak ukur audit sertifikasi perusahaan.</li>
+  <li><strong>ISO 20000:</strong> Standar internasional resmi untuk manajemen layanan TI, tolak ukur audit sertifikasi perusahaan.</li>
   <li><strong>DRC (Disaster Recovery Center):</strong> Data center cadangan untuk memulihkan operasional TI jika data center utama gagal total.</li>
-  <li><strong>Root Cause:</strong> Akar penyebab paling mendasar dari suatu masalah — jika dihilangkan, mencegah masalah berulang.</li>
+  <li><strong>Root Cause:</strong> Akar penyebab paling mendasar dari suatu masalah, jika dihilangkan, mencegah masalah berulang.</li>
   <li><strong>Unplanned vs Planned:</strong> <em>Unplanned</em> = kejadian mendadak yang merusak operasional normal; <em>Planned</em> = aktivitas terstruktur dengan alur persetujuan standar.</li>
 </ol>`,
         soal: {
@@ -1027,7 +1160,7 @@ const CATEGORIES = [
               q: "Berdasarkan ITIL 4, <em>Request Management</em> dan <em>Service Desk</em> diklasifikasikan sebagai...",
               options: ["Proses dan Fungsi", "Fungsi dan Praktik", "Keduanya adalah Practice (Praktik/Proses)", "Keduanya adalah Fungsi"],
               answer: 2,
-              explain: "Pada ITIL 4, perbedaan kaku antara proses dan fungsi dilebur — keduanya kini disebut sebagai Practice."
+              explain: "Pada ITIL 4, perbedaan kaku antara proses dan fungsi dilebur, keduanya kini disebut sebagai Practice."
             },
             {
               q: "Sebuah komponen server cadangan di DRC mengalami kerusakan fisik (harddisk <em>bad sector</em>). Sebagai QA/Analyst, kategori tiket apa yang harus dibuka?",
@@ -1049,9 +1182,9 @@ const CATEGORIES = [
         },
         kunci: {
           pg: [
-            "<strong>C — Practice.</strong> Pada ITIL 4, perbedaan kaku antara proses dan fungsi dilebur, keduanya kini disebut sebagai <em>Practice</em>.",
-            "<strong>B — Incident Management.</strong> Kerusakan di DRC berdampak pada penurunan kualitas kesiapan layanan jika sewaktu-waktu data center utama mati.",
-            "<strong>D — Request Management.</strong> Ini adalah permintaan terencana, standar, dan meminta sesuatu yang belum dimiliki sebelumnya oleh pengguna."
+            "<strong>C, Practice.</strong> Pada ITIL 4, perbedaan kaku antara proses dan fungsi dilebur, keduanya kini disebut sebagai <em>Practice</em>.",
+            "<strong>B, Incident Management.</strong> Kerusakan di DRC berdampak pada penurunan kualitas kesiapan layanan jika sewaktu-waktu data center utama mati.",
+            "<strong>D, Request Management.</strong> Ini adalah permintaan terencana, standar, dan meminta sesuatu yang belum dimiliki sebelumnya oleh pengguna."
           ],
           esai: [
             "Karena pengguna tersebut <em>sejatinya sudah memiliki hak akses fungsional</em> secara normal. Ketika ia tidak bisa masuk (karena lupa/terkunci), terjadi interupsi terhadap operasional normalnya (<em>unplanned interruption</em>). Segala sesuatu yang menghentikan atau menurunkan kualitas layanan normal adalah <strong>Incident</strong>.",
@@ -1069,8 +1202,8 @@ const CATEGORIES = [
   <li><strong>Pola Berulang (Threshold-Based):</strong> Insiden akan dieskalasi menjadi tiket <em>Problem</em> jika memenuhi kriteria perulangan yang sudah dikonfigurasi.<br><em>Contoh:</em> Jika <code>jumlah_komplain >= 10</code> DAN <code>durasi <= 5 hari</code> DARI <code>User_ID = sama</code> → <em>Trigger Problem Ticket</em>.</li>
   <li><strong>Known Error vs Unknown Error:</strong>
     <ul>
-      <li><strong>Insiden (Known Cause):</strong> Server mati karena <em>hard disk error</em> — akar masalah jelas, solusi pasti (ganti perangkat). Tidak perlu tiket Problem.</li>
-      <li><strong>Problem (Unknown Cause):</strong> Server lambat tanpa sebab yang jelas — <strong>wajib</strong> dicatat sebagai tiket Problem untuk mencari solusi permanen.</li>
+      <li><strong>Insiden (Known Cause):</strong> Server mati karena <em>hard disk error</em>, akar masalah jelas, solusi pasti (ganti perangkat). Tidak perlu tiket Problem.</li>
+      <li><strong>Problem (Unknown Cause):</strong> Server lambat tanpa sebab yang jelas, <strong>wajib</strong> dicatat sebagai tiket Problem untuk mencari solusi permanen.</li>
     </ul>
   </li>
   <li><strong>Proaktif vs Reaktif:</strong>
@@ -1085,7 +1218,7 @@ const CATEGORIES = [
 
 <h3>2. SLA: Mengapa Problem Management Tidak Diukur SLA Resolusi?</h3>
 <ul>
-  <li><strong>Problem Management:</strong> <strong>TIDAK</strong> diukur menggunakan SLA Resolusi. Analisis mendalam tidak bisa dibatasi oleh waktu ketat — jika dipaksakan, analisis menjadi dangkal dan masalah berpotensi terulang.</li>
+  <li><strong>Problem Management:</strong> <strong>TIDAK</strong> diukur menggunakan SLA Resolusi. Analisis mendalam tidak bisa dibatasi oleh waktu ketat, jika dipaksakan, analisis menjadi dangkal dan masalah berpotensi terulang.</li>
   <li><strong>Request Management:</strong> Menggunakan <em>Fulfillment Time / Completion Time</em>, <strong>bukan</strong> <em>Resolution Time</em>. Karena Request adalah permintaan terencana, tim TI tidak perlu "menyelesaikan" gangguan melainkan "memenuhi" permintaan.</li>
 </ul>
 
@@ -1093,16 +1226,25 @@ const CATEGORIES = [
 
 <h3>3. Workflow Tracking: Service Request</h3>
 <p>Alur kerja pemenuhan permintaan lebih kompleks dan sarat proses persetujuan dibandingkan penanganan insiden.</p>
-<strong>Siklus Tiket (Status Flow):</strong>
-<blockquote>
-  <code>Draft</code> → <code>In Review</code> → <code>Waiting Authorization</code> → <code>In Progress</code> → <code>Completed</code> → <code>Closed</code>
-</blockquote>
-<strong>Pencabangan Status Pengecualian:</strong>
-<ul>
-  <li>→ <code>Rejected</code> (Ditolak oleh atasan/sistem)</li>
-  <li>→ <code>Canceled</code> (Dibatalkan oleh peminta)</li>
-  <li>→ <code>Suspended</code> (Ditunda karena alasan tertentu)</li>
-</ul>
+<div class="mermaid-wrap">
+  <div class="mermaid-label">📊 Diagram Alur Status Service Request</div>
+  <div class="mermaid">
+flowchart LR
+    A([Draft]) --> B[In Review]
+    B --> C[Waiting\nAuthorization]
+    C -->|Disetujui| D[In Progress]
+    D --> E[Completed]
+    E --> F([Closed])
+    C -->|Ditolak| G([Rejected])
+    D -->|Dibatalkan| H([Canceled])
+    D -->|Ditunda| I([Suspended])
+    style G fill:#fff0f0,stroke:#e8404a,color:#c0392b
+    style H fill:#fffbe6,stroke:#c47a00,color:#8a6000
+    style I fill:#f0f1f7,stroke:#8a87ac,color:#4a4670
+    style F fill:#e8f8f0,stroke:#0aab7c,color:#077a58
+    style C fill:#eceef8,stroke:#5b4cdb,color:#3a2fb0
+  </div>
+</div>
 <p><strong>Analisis Sistem QA:</strong> Status <code>Draft</code>, <code>Waiting Authorization</code>, dan <code>Rejected</code> <strong>TIDAK ADA</strong> di dalam sistem Incident Management. Seseorang yang mengalami gangguan tidak perlu "meminta izin" agar sistemnya diperbaiki.</p>
 
 <hr/>
@@ -1122,7 +1264,7 @@ const CATEGORIES = [
               q: "Sebuah server tiba-tiba mati total. Tim IT menemukan ada kabel power yang terbakar secara fisik. Tindakan apa yang paling tepat secara kerangka kerja ITSM?",
               options: ["Membuka tiket Problem untuk mencari tahu siapa yang memasang kabel", "Menutup layanan Service Desk sementara", "Mencatatnya sebagai Insiden dan langsung mengganti kabel tersebut", "Memasukkan tiket ke status Waiting Authorization untuk membeli kabel"],
               answer: 2,
-              explain: "Akar masalahnya sudah jelas (Known error — kabel terbakar), solusinya pasti. Tugas IT adalah mengembalikan layanan normal (Incident response) secepat mungkin."
+              explain: "Akar masalahnya sudah jelas (Known error, kabel terbakar), solusinya pasti. Tugas IT adalah mengembalikan layanan normal (Incident response) secepat mungkin."
             },
             {
               q: "Perbedaan utama pengukuran metrik SLA antara <em>Incident</em> dan <em>Request</em> terletak pada...",
@@ -1134,7 +1276,7 @@ const CATEGORIES = [
               q: "Status tiket mana yang HANYA logis eksis di proses <em>Request Management</em>, tetapi TIDAK di <em>Incident Management</em>?",
               options: ["In Progress", "Closed", "Suspended", "Waiting Authorization"],
               answer: 3,
-              explain: "Waiting Authorization. Pemulihan dari kegagalan sistem (Insiden) tidak memerlukan prosedur persetujuan finansial/manajerial — IT harus langsung memperbaikinya."
+              explain: "Waiting Authorization. Pemulihan dari kegagalan sistem (Insiden) tidak memerlukan prosedur persetujuan finansial/manajerial, IT harus langsung memperbaikinya."
             }
           ],
           esai: [
@@ -1146,10 +1288,10 @@ const CATEGORIES = [
           pg: [
             "<strong>C.</strong> Mencatatnya sebagai Insiden dan langsung mengganti kabel tersebut. Akar masalahnya sudah jelas (<em>Known error</em>), sehingga tugas IT adalah mengembalikan layanan normal secepat mungkin.",
             "<strong>B.</strong> <em>Resolution Time</em> vs <em>Fulfillment Time</em>. Gangguan harus \"diresolusi\" (disembuhkan), sedangkan permintaan harus \"dipenuhi\" (di-<em>fulfill</em>).",
-            "<strong>D.</strong> <em>Waiting Authorization</em>. Pemulihan dari kegagalan sistem tidak memerlukan prosedur persetujuan finansial — IT harus langsung memperbaikinya."
+            "<strong>D.</strong> <em>Waiting Authorization</em>. Pemulihan dari kegagalan sistem tidak memerlukan prosedur persetujuan finansial, IT harus langsung memperbaikinya."
           ],
           esai: [
-            "<strong>Problem Ticket.</strong> Alasan: (1) Penyebab melambatnya query masih <em>Unknown Error</em> — belum diketahui mengapa terjadi. (2) Ini deteksi proaktif oleh admin tanpa ada interupsi dari pengguna ujung. Tujuan tiket ini adalah mencari akar masalah mengapa performa degradasi setiap pukul 2 dini hari.",
+            "<strong>Problem Ticket.</strong> Alasan: (1) Penyebab melambatnya query masih <em>Unknown Error</em>, belum diketahui mengapa terjadi. (2) Ini deteksi proaktif oleh admin tanpa ada interupsi dari pengguna ujung. Tujuan tiket ini adalah mencari akar masalah mengapa performa degradasi setiap pukul 2 dini hari.",
             "Karena penyelesaian <em>Problem Management</em> bersifat investigatif (<em>Root Cause Analysis</em>). Pemecahan masalah kompleks tidak memiliki pola waktu yang pasti. Memaksakan batas waktu ketat akan membuat teknisi mengaplikasikan solusi instan (<em>workaround</em> sementara), bukan mencari <strong>Solusi Permanen</strong>."
           ]
         }
@@ -1164,8 +1306,8 @@ const CATEGORIES = [
   <thead><tr><th>Nama Status</th><th>Request</th><th>Incident</th><th>Analisis Logika</th></tr></thead>
   <tbody>
     <tr><td><strong>In Review</strong></td><td>Ada</td><td>Ada</td><td>Pengecekan awal kelengkapan data oleh Service Desk.</td></tr>
-    <tr><td><strong>Waiting Authorization</strong></td><td>Ada</td><td><strong>TIDAK ADA</strong></td><td>Insiden harus segera ditangani — dilarang ditahan birokrasi approval.</td></tr>
-    <tr><td><strong>Rejected</strong></td><td>Ada</td><td><strong>TIDAK ADA</strong></td><td>Request bisa ditolak. Insiden tidak bisa "ditolak" — itu gangguan nyata.</td></tr>
+    <tr><td><strong>Waiting Authorization</strong></td><td>Ada</td><td><strong>TIDAK ADA</strong></td><td>Insiden harus segera ditangani, dilarang ditahan birokrasi approval.</td></tr>
+    <tr><td><strong>Rejected</strong></td><td>Ada</td><td><strong>TIDAK ADA</strong></td><td>Request bisa ditolak. Insiden tidak bisa "ditolak", itu gangguan nyata.</td></tr>
     <tr><td><strong>Canceled</strong></td><td>Ada</td><td>Ada</td><td>Contoh: user melapor error, ternyata Capslock menyala.</td></tr>
     <tr><td><strong>Terminasi Kerja</strong></td><td><strong>Completed</strong></td><td><strong>Resolved</strong></td><td>Request dipenuhi; Incident disembuhkan.</td></tr>
     <tr><td><strong>Closed</strong></td><td>Ada</td><td>Ada</td><td>Tiket ditutup permanen setelah pengguna menyetujui.</td></tr>
@@ -1180,15 +1322,35 @@ const CATEGORIES = [
 
 <h4>Skenario 1: Verifikasi Service Desk di Awal (Validasi Berlapis)</h4>
 <p>Digunakan untuk tiket kompleks yang perlu cek kelengkapan lampiran sebelum meminta persetujuan manajemen.</p>
-<blockquote>
-  <code>New Ticket</code> → <code>Service Desk Review</code> → <strong>[Minta Approval]</strong> → <em>(Tunggu Manajer)</em> → <strong>[Approved]</strong> → <strong>(SLA TIM TI MULAI)</strong> → <code>In Progress</code> → <code>Completed</code> → <code>Closed</code>
-</blockquote>
+<div class="mermaid-wrap">
+  <div class="mermaid-label">📊 Skenario 1 — Validasi Berlapis</div>
+  <div class="mermaid">
+flowchart LR
+    A([New Ticket]) --> B[SD Review]
+    B --> C{Minta Approval}
+    C -->|Tunggu Manajer| D([Approved])
+    D --> E["⏱ SLA TIM TI\nMULAI"]
+    E --> F[In Progress] --> G[Completed] --> H([Closed])
+    style E fill:#e8f8f0,stroke:#0aab7c,color:#077a58
+    style D fill:#eceef8,stroke:#5b4cdb,color:#3a2fb0
+  </div>
+</div>
 
 <h4>Skenario 2: Approval di Awal (Bypass Routing)</h4>
-<p>Digunakan untuk tiket sederhana yang sudah terstandarisasi — langsung dikirim sistem ke atasan peminta.</p>
-<blockquote>
-  <code>New Ticket</code> → <strong>[Auto-Route Approval]</strong> → <em>(Tunggu Manajer)</em> → <strong>[Approved]</strong> → <code>Service Desk Assign Team</code> → <strong>(SLA TIM TI MULAI)</strong> → <code>In Progress</code> → <code>Completed</code> → <code>Closed</code>
-</blockquote>
+<p>Digunakan untuk tiket sederhana yang sudah terstandarisasi, langsung dikirim sistem ke atasan peminta.</p>
+<div class="mermaid-wrap">
+  <div class="mermaid-label">📊 Skenario 2 — Bypass Routing</div>
+  <div class="mermaid">
+flowchart LR
+    A([New Ticket]) --> B{Auto-Route\nApproval}
+    B -->|Tunggu Manajer| C([Approved])
+    C --> D[SD Assign Team]
+    D --> E["⏱ SLA TIM TI\nMULAI"]
+    E --> F[In Progress] --> G[Completed] --> H([Closed])
+    style E fill:#e8f8f0,stroke:#0aab7c,color:#077a58
+    style C fill:#eceef8,stroke:#5b4cdb,color:#3a2fb0
+  </div>
+</div>
 
 <hr/>
 
@@ -1197,7 +1359,7 @@ const CATEGORIES = [
   <li><strong>State Machine:</strong> Konsep desain perangkat lunak di mana sistem hanya bisa berada pada satu status tertentu pada satu waktu, dan perubahannya diatur oleh aturan ketat.</li>
   <li><strong>In Review:</strong> Fase di mana tiket sedang diperiksa kelengkapannya oleh agen Service Desk.</li>
   <li><strong>Completed vs Resolved:</strong> <em>Completed</em> = pemenuhan request. <em>Resolved</em> = resolusi insiden (sistem kembali normal).</li>
-  <li><strong>Closed:</strong> Status pamungkas — tiket berpindah ke Closed hanya setelah <strong>pengguna</strong> memvalidasi hasil pekerjaan tim TI.</li>
+  <li><strong>Closed:</strong> Status pamungkas, tiket berpindah ke Closed hanya setelah <strong>pengguna</strong> memvalidasi hasil pekerjaan tim TI.</li>
 </ol>`,
         soal: {
           pg: [
@@ -1232,8 +1394,8 @@ const CATEGORIES = [
             "<strong>B.</strong> Skenario 1 memposisikan Service Desk di depan untuk memfilter formulir yang kurang lengkap sebelum mengganggu atasan."
           ],
           esai: [
-            "Ini adalah bug berisiko tinggi karena sistem yang mengalami kerusakan masif (Database Down) adalah <strong>Insiden</strong> yang membutuhkan perbaikan instan. Jika tiket Insiden bisa diubah menjadi <em>Waiting Authorization</em>, operasional pemulihan sistem bisa terhenti hanya karena menunggu persetujuan — memperpanjang downtime dan merugikan bisnis.",
-            "<em>Completed</em> atau <em>Resolved</em> hanyalah klaim sepihak dari tim teknis bahwa pekerjaan 'telah selesai'. Status <strong>Closed</strong> mewajibkan persetujuan pengguna — memastikan pengguna benar-benar merasa masalahnya hilang atau permintaannya sesuai sebelum tiket disegel secara sistem."
+            "Ini adalah bug berisiko tinggi karena sistem yang mengalami kerusakan masif (Database Down) adalah <strong>Insiden</strong> yang membutuhkan perbaikan instan. Jika tiket Insiden bisa diubah menjadi <em>Waiting Authorization</em>, operasional pemulihan sistem bisa terhenti hanya karena menunggu persetujuan, memperpanjang downtime dan merugikan bisnis.",
+            "<em>Completed</em> atau <em>Resolved</em> hanyalah klaim sepihak dari tim teknis bahwa pekerjaan 'telah selesai'. Status <strong>Closed</strong> mewajibkan persetujuan pengguna, memastikan pengguna benar-benar merasa masalahnya hilang atau permintaannya sesuai sebelum tiket disegel secara sistem."
           ]
         }
       },
@@ -1259,7 +1421,7 @@ const CATEGORIES = [
 <h4>🔴 A. Insiden: Konsep "Bola Panas" (Single-Threaded)</h4>
 <ul>
   <li>Tiket Insiden tidak boleh dipecah menjadi beberapa task paralel.</li>
-  <li>Tujuannya resolusi secepat mungkin — tiket dilempar seperti "bola panas" (L1 → L2 Server → L3 Network).</li>
+  <li>Tujuannya resolusi secepat mungkin, tiket dilempar seperti "bola panas" (L1 → L2 Server → L3 Network).</li>
   <li>Hanya ada <strong>satu nomor tiket tunggal</strong> yang berpindah tangan.</li>
 </ul>
 
@@ -1268,13 +1430,20 @@ const CATEGORIES = [
   <li>Request dapat dikerjakan secara komprehensif, melibatkan beberapa grup kerja sekaligus.</li>
   <li><strong>Parent-Child Ticket:</strong> Jika eksekusinya paralel, satu nomor tiket utama dipecah menjadi beberapa Sub-Task.</li>
 </ul>
-<blockquote>
-  <strong>Contoh Request Onboarding:</strong><br>
-  <code>[Tiket Utama: Request Onboarding]</code><br>
-  ├── <code>[Work Order A]: Setup Akses Email</code> → Tim Sysadmin<br>
-  ├── <code>[Work Order B]: Kirim Laptop Fisik</code> → Tim IT Asset<br>
-  └── <code>[Work Order C]: Setup Akses ERP</code> → Tim Aplikasi
-</blockquote>
+<div class="mermaid-wrap">
+  <div class="mermaid-label">📊 Arsitektur Parent-Child Ticket — Request Onboarding</div>
+  <div class="mermaid">
+flowchart TD
+    P["🎫 Parent Ticket #RQ-100\nRequest Onboarding Karyawan"]
+    P --> A["Work Order A\nSetup Akses Email\n→ Tim Sysadmin"]
+    P --> B["Work Order B\nKirim Laptop Fisik\n→ Tim IT Asset"]
+    P --> C["Work Order C\nSetup Akses ERP\n→ Tim Aplikasi"]
+    style P fill:#eceef8,stroke:#5b4cdb,color:#1a1835
+    style A fill:#e6f4ff,stroke:#2a7ee8,color:#1a3a5c
+    style B fill:#fff8e6,stroke:#c47a00,color:#5c3a00
+    style C fill:#e8f8f0,stroke:#0aab7c,color:#045c3f
+  </div>
+</div>
 
 <hr/>
 
@@ -1319,7 +1488,7 @@ const CATEGORIES = [
             "<strong>C.</strong> Jika eksekusinya linear/serial berurutan, tiket tidak tumpang tindih waktu, sehingga bisa memakai nomor tiket yang sama secara beranting."
           ],
           esai: [
-            "Ini adalah <strong>BUG</strong> (cacat logika sistem) karena argo SLA di sistem berbasis <em>Due Date</em> harus terpicu <strong>secara otomatis (by system clock)</strong> tepat 5 hari sebelum Due Date — bukan berdasarkan aksi manual klik 'Pick Up' oleh teknisi. Jika menunggu klik teknisi, performa buruk teknisi tidak terdeteksi di laporan.",
+            "Ini adalah <strong>BUG</strong> (cacat logika sistem) karena argo SLA di sistem berbasis <em>Due Date</em> harus terpicu <strong>secara otomatis (by system clock)</strong> tepat 5 hari sebelum Due Date, bukan berdasarkan aksi manual klik 'Pick Up' oleh teknisi. Jika menunggu klik teknisi, performa buruk teknisi tidak terdeteksi di laporan.",
             "Sebuah tiket Request wajib dipecah menjadi Work Order/Tasks ketika pekerjaan membutuhkan <strong>penanganan paralel</strong> (dikerjakan bersamaan) oleh dua atau lebih Solver Group berbeda. Jika tidak dipecah, SLA penyelesaian dari tiap-tiap departemen tidak bisa dilacak dengan akurat."
           ]
         }
@@ -1347,7 +1516,7 @@ const CATEGORIES = [
   <thead><tr><th>Pendekatan</th><th>Cara Kerja</th><th>Risiko</th></tr></thead>
   <tbody>
     <tr><td><strong>Hardcode (Buruk)</strong></td><td>Puluhan workflow kaku per jenis request</td><td>Sulit dipelihara, rawan bug saat ada perubahan</td></tr>
-    <tr><td><strong>Decision Matrix (Ideal)</strong></td><td>1 workflow + tabel referensi di database</td><td>Fleksibel — tambah layanan baru cukup tambah baris data</td></tr>
+    <tr><td><strong>Decision Matrix (Ideal)</strong></td><td>1 workflow + tabel referensi di database</td><td>Fleksibel, tambah layanan baru cukup tambah baris data</td></tr>
   </tbody>
 </table>
 
@@ -1356,8 +1525,8 @@ const CATEGORIES = [
 <h3>2. Anatomi Peran Service Desk</h3>
 <ul>
   <li><strong>Ticket Ownership:</strong> Service Desk adalah pemilik tiket dari awal (<em>cradle</em>) hingga ditutup (<em>grave</em>). Meskipun tiket sedang dilempar ke Tim L2/L3, Service Desk tetap memantau SLA.</li>
-  <li><strong>The IT Shield (Tameng TI):</strong> Fungsi utama Service Desk adalah menyaring interupsi — para Engineer dan Programmer bisa fokus tanpa diganggu langsung oleh telepon pengguna.</li>
-  <li><strong>Fondasi Karir Soft-Skill:</strong> Posisi ini melatih empati dan komunikasi tingkat tinggi — terjepit antara user yang marah dan teknisi yang stres. Lulusan berhasil sangat mudah bermigrasi menjadi System Analyst, QA, atau Manajer Proyek.</li>
+  <li><strong>The IT Shield (Tameng TI):</strong> Fungsi utama Service Desk adalah menyaring interupsi, para Engineer dan Programmer bisa fokus tanpa diganggu langsung oleh telepon pengguna.</li>
+  <li><strong>Fondasi Karir Soft-Skill:</strong> Posisi ini melatih empati dan komunikasi tingkat tinggi, terjepit antara user yang marah dan teknisi yang stres. Lulusan berhasil sangat mudah bermigrasi menjadi System Analyst, QA, atau Manajer Proyek.</li>
 </ul>
 
 <hr/>
@@ -1403,7 +1572,7 @@ const CATEGORIES = [
             "<strong>D.</strong> Service Desk. Service Desk bertindak sebagai penanggung jawab utama (SPOC) atas kepuasan user dari awal hingga tutup."
           ],
           esai: [
-            "Jika menggunakan <strong>Hardcode</strong>, Developer harus membongkar program, membuat desain workflow baru, menyusun logic routing khusus, melakukan testing ulang, lalu deploy ulang — memakan waktu berminggu-minggu. Jika menggunakan <strong>Tabel Matriks</strong>, Admin cukup menambahkan satu baris data. Kategori baru langsung aktif dalam hitungan menit tanpa merombak sistem.",
+            "Jika menggunakan <strong>Hardcode</strong>, Developer harus membongkar program, membuat desain workflow baru, menyusun logic routing khusus, melakukan testing ulang, lalu deploy ulang, memakan waktu berminggu-minggu. Jika menggunakan <strong>Tabel Matriks</strong>, Admin cukup menambahkan satu baris data. Kategori baru langsung aktif dalam hitungan menit tanpa merombak sistem.",
             "Nilai strategisnya terletak sebagai <strong>Tameng/Pelindung</strong> tim TI dan <strong>Ticket Owner</strong>. Mereka membangun kemampuan komunikasi dan empati tingkat tinggi saat berhadapan dengan keluhan emosional, sekaligus melindungi Engineer/Developer agar tetap fokus pada pekerjaan back-end yang rumit tanpa interupsi langsung."
           ]
         }
@@ -1418,7 +1587,7 @@ const CATEGORIES = [
 <h4>1. 🏢 Local Service Desk (Desentralisasi)</h4>
 <ul>
   <li><strong>Konsep:</strong> Setiap kantor cabang memiliki tim Service Desk di lokasi fisiknya.</li>
-  <li><strong>Routing:</strong> Aplikasi diprogram dengan pembatasan geografis (<em>Geofencing</em>) — karyawan Cabang A hanya bisa mengirim tiket ke Service Desk Cabang A.</li>
+  <li><strong>Routing:</strong> Aplikasi diprogram dengan pembatasan geografis (<em>Geofencing</em>), karyawan Cabang A hanya bisa mengirim tiket ke Service Desk Cabang A.</li>
 </ul>
 
 <h4>2. 🏛️ Centralized Service Desk (Pemusatan)</h4>
@@ -1430,7 +1599,7 @@ const CATEGORIES = [
 <h4>3. ☁️ Virtual Service Desk (Cloud-Based)</h4>
 <ul>
   <li><strong>Konsep:</strong> Menggunakan teknologi telekomunikasi pintar dan AI (Chatbot) untuk mendistribusikan tiket ke agen di seluruh dunia.</li>
-  <li><strong>Routing:</strong> Bergantung pada ACD (<em>Automatic Call Distribution</em>) dan IVR — sistem mencari "Siapa agen yang idle di belahan dunia mana pun?"</li>
+  <li><strong>Routing:</strong> Bergantung pada ACD (<em>Automatic Call Distribution</em>) dan IVR, sistem mencari "Siapa agen yang idle di belahan dunia mana pun?"</li>
 </ul>
 
 <h4>4. 🌍 Follow The Sun (Operasional Global 24/7)</h4>
@@ -1448,7 +1617,7 @@ const CATEGORIES = [
 <h4>5. 🎯 Specialized Service Desk (Ahli Langsung)</h4>
 <ul>
   <li><strong>Konsep:</strong> Kontak pertama pengguna langsung dijawab oleh tim spesialis tingkat lanjut.</li>
-  <li><strong>Routing:</strong> Memotong jalur eskalasi standar — tiket langsung diterima dan dieksekusi tuntas di satu lapisan (Tier 2/3 experts).</li>
+  <li><strong>Routing:</strong> Memotong jalur eskalasi standar, tiket langsung diterima dan dieksekusi tuntas di satu lapisan (Tier 2/3 experts).</li>
 </ul>
 
 <hr/>
@@ -1487,7 +1656,7 @@ const CATEGORIES = [
               q: "Kelemahan paling fatal jika perusahaan global mengimplementasikan <em>Follow The Sun</em> tanpa persiapan matang adalah...",
               options: ["Biaya lembur karyawan membengkak drastis", "Setiap negara wajib memiliki 3 shift kerja penuh waktu", "Terjadinya kegagalan komunikasi jika tidak ada standarisasi bahasa dan kesatuan sistem aplikasi ITSM", "IVR sering memutus sambungan telepon"],
               answer: 2,
-              explain: "Tanpa standarisasi bahasa dan satu platform ITSM global, riwayat tiket tidak bisa dibaca antar zona waktu — menyebabkan kegagalan handover."
+              explain: "Tanpa standarisasi bahasa dan satu platform ITSM global, riwayat tiket tidak bisa dibaca antar zona waktu, menyebabkan kegagalan handover."
             },
             {
               q: "Model Service Desk mana yang paling cocok untuk perusahaan dengan anggaran terbatas namun tetap ingin menyediakan layanan 24 jam?",
@@ -1504,12 +1673,12 @@ const CATEGORIES = [
         kunci: {
           pg: [
             "<strong>B. Centralized Service Desk.</strong> Satu pintu pelaporan terpusat di Jakarta, namun eksekusi lapangan didisposisi ke teknisi di lokasi ATM yang rusak.",
-            "<strong>C.</strong> Tanpa standarisasi bahasa dan satu platform ITSM global, riwayat tiket tidak bisa dibaca antar zona waktu — menyebabkan kegagalan handover yang fatal.",
+            "<strong>C.</strong> Tanpa standarisasi bahasa dan satu platform ITSM global, riwayat tiket tidak bisa dibaca antar zona waktu, menyebabkan kegagalan handover yang fatal.",
             "<strong>B. Virtual Service Desk (Chatbot AI).</strong> Memungkinkan layanan 24 jam dengan biaya operasional jauh lebih rendah karena tidak memerlukan agen manusia di setiap shift malam."
           ],
           esai: [
-            "Tiga prasyarat: <strong>(1) Standardisasi Bahasa</strong> — seluruh agen dan dokumentasi tiket menggunakan satu bahasa (umumnya Inggris) agar riwayat tiket bisa dibaca antar zona. <strong>(2) Satu Sistem ITSM Global</strong> — semua hub menggunakan platform yang sama dengan akses real-time ke database tiket yang sama. <strong>(3) Standarisasi SLA & Prosedur Handover</strong> — ada protokol serah terima tiket yang jelas antar shift/hub agar tidak ada tiket yang 'hilang' saat perpindahan zona.",
-            "<strong>Centralized:</strong> Sistem menggunakan single-pool routing — semua tiket dari seluruh cabang masuk ke antrian terpusat, lalu didisposisi secara manual/otomatis ke teknisi yang tepat. <strong>Local:</strong> Sistem menggunakan geofencing/site-based routing — tiket secara otomatis diarahkan ke pool antrian cabang yang sama dengan lokasi pengirim tiket."
+            "Tiga prasyarat: <strong>(1) Standardisasi Bahasa</strong>, seluruh agen dan dokumentasi tiket menggunakan satu bahasa (umumnya Inggris) agar riwayat tiket bisa dibaca antar zona. <strong>(2) Satu Sistem ITSM Global</strong>, semua hub menggunakan platform yang sama dengan akses real-time ke database tiket yang sama. <strong>(3) Standarisasi SLA & Prosedur Handover</strong>, ada protokol serah terima tiket yang jelas antar shift/hub agar tidak ada tiket yang 'hilang' saat perpindahan zona.",
+            "<strong>Centralized:</strong> Sistem menggunakan single-pool routing, semua tiket dari seluruh cabang masuk ke antrian terpusat, lalu didisposisi secara manual/otomatis ke teknisi yang tepat. <strong>Local:</strong> Sistem menggunakan geofencing/site-based routing, tiket secara otomatis diarahkan ke pool antrian cabang yang sama dengan lokasi pengirim tiket."
           ]
         }
       },
@@ -1520,8 +1689,8 @@ const CATEGORIES = [
         material: `<h3>1. Problematika Operasional: Fenomena System Bypass</h3>
 <p>Di banyak institusi (terutama pemerintahan), fungsi Service Desk sering ditiadakan atau diserahkan ke magang secara tidak terstruktur.</p>
 <ul>
-  <li><strong>Dampak Sistemik:</strong> Pengguna akan melakukan <em>System Bypass</em> — langsung menelepon Manajer TI atau "teman" di departemen TI.</li>
-  <li><strong>Analisis QA:</strong> Hal ini menciptakan <strong>Shadow IT Support</strong> — gangguan tidak tercatat di database tiketing, SLA tidak bisa diukur, beban kerja teknisi tidak transparan.</li>
+  <li><strong>Dampak Sistemik:</strong> Pengguna akan melakukan <em>System Bypass</em>, langsung menelepon Manajer TI atau "teman" di departemen TI.</li>
+  <li><strong>Analisis QA:</strong> Hal ini menciptakan <strong>Shadow IT Support</strong>, gangguan tidak tercatat di database tiketing, SLA tidak bisa diukur, beban kerja teknisi tidak transparan.</li>
 </ul>
 
 <hr/>
@@ -1530,8 +1699,8 @@ const CATEGORIES = [
 <ul>
   <li><strong>Front-End UX:</strong> Menjaga wajah profesional TI. Seburuk apapun bug di back-end, pengguna hanya berinteraksi dengan antarmuka yang tenang dan terstruktur.</li>
   <li><strong>Resource Optimization:</strong> Memisahkan fungsi operasional (memperbaiki sistem rusak) dari fungsi pengembangan (membuat sistem baru). Programmer dan Sysadmin bisa fokus tanpa interupsi.</li>
-  <li><strong>Proactive Broadcast:</strong> Berfungsi sebagai modul notifikasi massal (<em>Broadcaster</em>) — memberikan peringatan dini sebelum downtime terencana.</li>
-  <li><strong>Data Integrity & Routing Control:</strong> Bertindak sebagai filter pertama (<em>First-level Triage</em>) — memastikan tiket dikategorikan dengan benar sebelum didistribusikan ke tim spesialis.</li>
+  <li><strong>Proactive Broadcast:</strong> Berfungsi sebagai modul notifikasi massal (<em>Broadcaster</em>), memberikan peringatan dini sebelum downtime terencana.</li>
+  <li><strong>Data Integrity & Routing Control:</strong> Bertindak sebagai filter pertama (<em>First-level Triage</em>), memastikan tiket dikategorikan dengan benar sebelum didistribusikan ke tim spesialis.</li>
 </ul>
 
 <hr/>
@@ -1546,7 +1715,7 @@ const CATEGORIES = [
     <tr><td>Metrik SLA</td><td>Waktu Resolusi/Fulfillment TI</td><td>Kepuasan Pelanggan Eksternal</td></tr>
   </tbody>
 </table>
-<p>Menggabungkan keduanya akan menciptakan <strong>Data Pollution</strong> — metrik kepuasan pelanggan eksternal tercampur dengan masalah printer rusak staf internal, sehingga laporan analitik manajemen menjadi cacat.</p>
+<p>Menggabungkan keduanya akan menciptakan <strong>Data Pollution</strong>, metrik kepuasan pelanggan eksternal tercampur dengan masalah printer rusak staf internal, sehingga laporan analitik manajemen menjadi cacat.</p>
 
 <hr/>
 
@@ -1554,7 +1723,7 @@ const CATEGORIES = [
 <ol>
   <li><strong>CMDB (Configuration Management Database):</strong> Basis data yang menyimpan seluruh informasi mengenai aset teknologi (komputer, server, router, lisensi software) dan hubungan ketergantungan di antaranya.</li>
   <li><strong>System Bypass:</strong> Perilaku pengguna yang menghindari prosedur pelaporan resmi dan memilih jalur informal.</li>
-  <li><strong>Data Pollution:</strong> Kondisi di mana database tercampur data tidak relevan — menyebabkan laporan analitik menghasilkan kesimpulan yang salah.</li>
+  <li><strong>Data Pollution:</strong> Kondisi di mana database tercampur data tidak relevan, menyebabkan laporan analitik menghasilkan kesimpulan yang salah.</li>
   <li><strong>Shadow IT Support:</strong> Praktik pemberian bantuan teknis yang tidak terekam, tidak resmi, dan tidak terukur oleh sistem manajemen.</li>
   <li><strong>Planned Maintenance:</strong> Waktu matinya sistem secara sengaja untuk perbaikan atau update yang sudah dikomunikasikan sebelumnya.</li>
 </ol>`,
@@ -1562,13 +1731,13 @@ const CATEGORIES = [
           pg: [
             {
               q: "Apa dampak logis dan terburuk pada sistem pelaporan jika tidak ada Service Desk dan pengguna selalu langsung menelepon programmer?",
-              options: ["Pekerjaan menjadi lebih cepat dan efisien", "CMDB akan mencatat semua telepon secara otomatis", "Terjadinya Shadow IT Support — insiden tidak tercatat, manajemen TI kehilangan data pengukur beban kerja", "Kinerja aplikasi akan langsung melambat"],
+              options: ["Pekerjaan menjadi lebih cepat dan efisien", "CMDB akan mencatat semua telepon secara otomatis", "Terjadinya Shadow IT Support, insiden tidak tercatat, manajemen TI kehilangan data pengukur beban kerja", "Kinerja aplikasi akan langsung melambat"],
               answer: 2,
               explain: "Jika proses tidak melewati sistem resmi, tiket tidak dibuat. Jika tiket tidak dibuat, sistem analitik tidak memiliki data (No data, no metric)."
             },
             {
               q: "Perusahaan ritel menggabungkan antrian Call Center keluhan pembeli (eksternal) dengan Service Desk keluhan komputer kasir rusak (internal) dalam satu sistem routing. Risiko analitik apa yang akan dialami QA?",
-              options: ["Routing menjadi lebih pintar karena ada AI", "Terjadi Data Pollution — metrik SLA perbaikan alat TI internal bercampur baur dengan metrik pelayanan keluhan pembeli", "Teknisi jaringan lebih mudah memperbaiki mesin kasir", "Tidak ada risiko, karena keduanya sama-sama melayani komplain"],
+              options: ["Routing menjadi lebih pintar karena ada AI", "Terjadi Data Pollution, metrik SLA perbaikan alat TI internal bercampur baur dengan metrik pelayanan keluhan pembeli", "Teknisi jaringan lebih mudah memperbaiki mesin kasir", "Tidak ada risiko, karena keduanya sama-sama melayani komplain"],
               answer: 1,
               explain: "Data Pollution. Parameter bisnis pelanggan eksternal (komplain produk cacat) sangat berbeda dari kasir internal (keyboard rusak). Menggabungkannya merusak keabsahan laporan."
             },
@@ -1606,7 +1775,7 @@ const CATEGORIES = [
     <tr><td><strong>Incident & Request</strong></td><td>Service Desk</td><td>Wewenang utama SD untuk dicatat, didiagnosis, dan diselesaikan jika mampu.</td></tr>
     <tr><td><strong>Inquiry (Tanya Jawab)</strong></td><td>Service Desk</td><td>Pengguna hanya butuh panduan (misal: "Bagaimana cara konek WiFi?").</td></tr>
     <tr><td><strong>Problem (Akar Masalah)</strong></td><td>Problem Manager</td><td>SD DILARANG menangani investigasi akar masalah agar waktu antrian tidak tersumbat.</td></tr>
-    <tr><td><strong>New Application / Enhancement</strong></td><td>Demand Manager / Business Analyst</td><td>Ini proyek pengembangan — SD harus memblokir dan mengarahkan ke jalur Project Management.</td></tr>
+    <tr><td><strong>New Application / Enhancement</strong></td><td>Demand Manager / Business Analyst</td><td>Ini proyek pengembangan, SD harus memblokir dan mengarahkan ke jalur Project Management.</td></tr>
   </tbody>
 </table>
 
@@ -1615,7 +1784,7 @@ const CATEGORIES = [
 <h3>2. Agen Investigasi (Level 1) vs Dispatcher Pasif</h3>
 <p>Service Desk yang baik bukan sekadar Dispatcher (petugas penyalur tiket).</p>
 <ul>
-  <li><strong>Dispatcher Pasif:</strong> Hanya melihat judul tiket dan langsung melempar ke tim belakang — fungsinya bisa 100% digantikan robot routing (IVR/ACD).</li>
+  <li><strong>Dispatcher Pasif:</strong> Hanya melihat judul tiket dan langsung melempar ke tim belakang, fungsinya bisa 100% digantikan robot routing (IVR/ACD).</li>
   <li><strong>Investigasi Awal (First Line Diagnosis):</strong> Agen wajib melakukan troubleshooting dasar ("Apakah sudah cek kabel LAN?", "Ada notifikasi error code di layar?"). Ini adalah filter (firewall) agar teknisi L2 menerima tiket dengan data teknis yang sudah matang dan valid.</li>
 </ul>
 
@@ -1624,22 +1793,28 @@ const CATEGORIES = [
 <h3>3. Algoritma Timeboxing & First Contact Resolution (FCR)</h3>
 <p><strong>Aturan emas antrian:</strong> Jangan biarkan Service Desk memegang tiket terlalu lama.</p>
 <ul>
-  <li>Service Desk dituntut mencapai <strong>First Contact Resolution (FCR)</strong> — menyelesaikan masalah saat pengguna pertama kali melapor.</li>
+  <li>Service Desk dituntut mencapai <strong>First Contact Resolution (FCR)</strong>, menyelesaikan masalah saat pengguna pertama kali melapor.</li>
   <li><strong>Timeboxing:</strong> Penyelesaian dibatasi waktu (misal: <strong>15–30 menit</strong>). Jika dalam 15 menit gagal diselesaikan → <strong>Stop & Escalate</strong> ke Level 2.</li>
-  <li><strong>Alasan Analitik:</strong> Jika satu agen memaksakan diri 2 jam untuk satu tiket rumit, ia akan mengabaikan 20+ panggilan masuk — Abandonment Rate meroket dan SLA perusahaan hancur.</li>
+  <li><strong>Alasan Analitik:</strong> Jika satu agen memaksakan diri 2 jam untuk satu tiket rumit, ia akan mengabaikan 20+ panggilan masuk, Abandonment Rate meroket dan SLA perusahaan hancur.</li>
 </ul>
 
 <h4>Decision Tree Tiket Service Desk:</h4>
-<blockquote>
-  <strong>[Tiket Masuk ke Service Desk]</strong><br>
-  ├── Apakah ini permintaan Aplikasi Baru/Enhancement?<br>
-  │   └── YES → <strong>[REJECT TIKET]</strong> → Arahkan ke Demand Manager/BA<br>
-  └── NO → Apakah Insiden/Request Standar?<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;└── YES → Lakukan Investigasi Awal (Level 1 Diagnosis)<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Bisa diselesaikan dalam &lt;15 Menit?<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│   └── YES → <strong>[SOLVED at First Contact / FCR]</strong><br>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── NO → <strong>[ESCALATE]</strong> → Lempar ke Level 2
-</blockquote>
+<div class="mermaid-wrap">
+  <div class="mermaid-label">📊 Decision Tree — Alur Kerja Service Desk</div>
+  <div class="mermaid">
+flowchart TD
+    A(["Tiket Masuk\nke Service Desk"]) --> B{"Permintaan Aplikasi\nBaru / Enhancement?"}
+    B -->|YES| C["❌ REJECT TIKET\nArahkan ke\nDemand Manager / BA"]
+    B -->|NO| D{"Insiden /\nRequest Standar?"}
+    D -->|YES| E["Investigasi Awal\nLevel 1 Diagnosis"]
+    E --> F{"Selesai\n< 15 Menit?"}
+    F -->|YES| G(["✅ SOLVED\nFirst Contact Resolution"])
+    F -->|NO| H(["⬆️ ESCALATE\nLempar ke Level 2"])
+    style C fill:#fff0f0,stroke:#e8404a,color:#c0392b
+    style G fill:#e8f8f0,stroke:#0aab7c,color:#077a58
+    style H fill:#eceef8,stroke:#5b4cdb,color:#3a2fb0
+  </div>
+</div>
 
 <hr/>
 
@@ -1679,7 +1854,7 @@ const CATEGORIES = [
         },
         kunci: {
           pg: [
-            "<strong>B.</strong> Service Desk hanya melayani operasional (menjaga sistem yang sudah ada). Permintaan perangkat lunak baru adalah proyek/inisiatif (Demand) — harus ditangani Demand Manager/BA.",
+            "<strong>B.</strong> Service Desk hanya melayani operasional (menjaga sistem yang sudah ada). Permintaan perangkat lunak baru adalah proyek/inisiatif (Demand), harus ditangani Demand Manager/BA.",
             "<strong>B.</strong> Service Desk bertugas sebagai penjaga gerbang utama. Jika satu-satunya penjaga terlalu sibuk memperbaiki satu masalah rumit, puluhan pelanggan lain akan terbengkalai.",
             "<strong>D. First Contact Resolution (FCR).</strong> Metrik ini mengukur persentase tiket yang berhasil diselesaikan pada interaksi pertama tanpa eskalasi."
           ],
@@ -1723,12 +1898,20 @@ const CATEGORIES = [
 <ul>
   <li><strong>Sistem Blokir Buka Tiket Baru:</strong> Jika pengguna masih memiliki tiket berstatus "Selesai" namun belum diberi rating survei, tombol "Buat Tiket Baru" akan dinonaktifkan (<em>disabled</em>) oleh sistem.</li>
 </ul>
-<blockquote>
-  <strong>[User Klik 'Create New Ticket']</strong><br>
-  ├── Ada tiket terakhir yang belum di-rating?<br>
-  │   └── YES → <strong>[BLOCK]</strong> Tampilkan Pop-up Survei: "Nilai layanan kami sebelumnya untuk membuka tiket baru."<br>
-  └── NO → <strong>[ALLOW]</strong> Buka Form Pembuatan Tiket Baru.
-</blockquote>
+<div class="mermaid-wrap">
+  <div class="mermaid-label">📊 Hard-Gate Logic — Sistem Paksa Isi Survei</div>
+  <div class="mermaid">
+flowchart TD
+    A(["User Klik\n'Create New Ticket'"]) --> B{"Ada tiket lama\nbelum di-rating?"}
+    B -->|YES| C["🚫 BLOCK\nTampilkan Pop-up Survei:\n'Nilai layanan kami dulu'"]
+    C --> D{"Survei\nDiisi?"}
+    D -->|YES| E(["✅ ALLOW\nBuka Form Tiket Baru"])
+    D -->|NO| C
+    B -->|NO| E
+    style C fill:#fff0f0,stroke:#e8404a,color:#c0392b
+    style E fill:#e8f8f0,stroke:#0aab7c,color:#077a58
+  </div>
+</div>
 
 <hr/>
 
@@ -1750,9 +1933,9 @@ const CATEGORIES = [
             },
             {
               q: "Dampak analitik apa yang terjadi jika departemen TI hanya menyebarkan survei kepuasan setahun sekali di akhir tahun?",
-              options: ["Tingkat partisipasi survei mencapai 100%", "Hasilnya tidak valid karena terkena efek Recency Bias — pengguna hanya mengingat insiden buruk yang paling baru", "Pengguna memberikan nilai sangat tinggi karena apresiasi", "Server database kelebihan beban"],
+              options: ["Tingkat partisipasi survei mencapai 100%", "Hasilnya tidak valid karena terkena efek Recency Bias, pengguna hanya mengingat insiden buruk yang paling baru", "Pengguna memberikan nilai sangat tinggi karena apresiasi", "Server database kelebihan beban"],
               answer: 1,
-              explain: "Recency Bias menghapus memori tentang pelayanan baik berbulan-bulan lalu dan menyoroti kekecewaan paling baru — membuat rapor TI tampak lebih buruk dari realitasnya."
+              explain: "Recency Bias menghapus memori tentang pelayanan baik berbulan-bulan lalu dan menyoroti kekecewaan paling baru, membuat rapor TI tampak lebih buruk dari realitasnya."
             },
             {
               q: "Cara paling efektif secara sistem untuk meningkatkan persentase pengisian survei kepuasan pengguna adalah...",
@@ -1769,12 +1952,12 @@ const CATEGORIES = [
         kunci: {
           pg: [
             "<strong>C.</strong> Automasi mengambil alih tugas repetitif (melapor progres), sehingga agen bisa fokus mendiagnosis dan menyelesaikan keluhan tiket lainnya.",
-            "<strong>B. Recency Bias.</strong> Menghapus memori tentang pelayanan baik berbulan-bulan lalu dan menyoroti kekecewaan paling baru — membuat rapor TI tampak lebih buruk dari realitasnya.",
+            "<strong>B. Recency Bias.</strong> Menghapus memori tentang pelayanan baik berbulan-bulan lalu dan menyoroti kekecewaan paling baru, membuat rapor TI tampak lebih buruk dari realitasnya.",
             "<strong>A. Hard-Gate System.</strong> Pemblokiran bersyarat ini memaksa pengguna berpartisipasi dalam evaluasi layanan sebagai 'harga' untuk mendapatkan dukungan TI selanjutnya."
           ],
           esai: [
-            "<strong>Pelanggaran Hak Validasi:</strong> Tiket yang ditutup (Closed) secara sepihak oleh teknisi berarti mencabut hak evaluasi pengguna. Bisa jadi teknisi merasa masalah jaringan sudah beres dari layar monitoring server, namun di meja karyawan jaringan tersebut masih terputus. Jika tiket ditutup sepihak, keluhan tidak tuntas — namun secara SLA sistem terlihat 100% sempurna. Ini menciptakan laporan kinerja yang fiktif/palsu.",
-            "<strong>Auto-Close Logic:</strong> Sering kali pengguna yang masalahnya sudah teratasi langsung kembali bekerja dan mengabaikan email konfirmasi. Jika tidak di-Auto-Close, tiket menggantung selamanya berstatus Resolved dan Service Desk tidak bisa mencapai target pembersihan tiket. Sistem menjalankan penghitung waktu (misal: 72 jam) — jika dalam 72 jam sejak Resolved tidak ada bantahan dari user, sistem menganggap solusi diterima dan mengunci tiket menjadi Closed secara otomatis."
+            "<strong>Pelanggaran Hak Validasi:</strong> Tiket yang ditutup (Closed) secara sepihak oleh teknisi berarti mencabut hak evaluasi pengguna. Bisa jadi teknisi merasa masalah jaringan sudah beres dari layar monitoring server, namun di meja karyawan jaringan tersebut masih terputus. Jika tiket ditutup sepihak, keluhan tidak tuntas, namun secara SLA sistem terlihat 100% sempurna. Ini menciptakan laporan kinerja yang fiktif/palsu.",
+            "<strong>Auto-Close Logic:</strong> Sering kali pengguna yang masalahnya sudah teratasi langsung kembali bekerja dan mengabaikan email konfirmasi. Jika tidak di-Auto-Close, tiket menggantung selamanya berstatus Resolved dan Service Desk tidak bisa mencapai target pembersihan tiket. Sistem menjalankan penghitung waktu (misal: 72 jam), jika dalam 72 jam sejak Resolved tidak ada bantahan dari user, sistem menganggap solusi diterima dan mengunci tiket menjadi Closed secara otomatis."
           ]
         }
       },
@@ -1793,7 +1976,7 @@ const CATEGORIES = [
 <hr/>
 
 <h3>2. Strategi Sizing SDM Service Desk: Data-Driven Approach</h3>
-<p>Menentukan jumlah personel Service Desk tidak boleh berdasarkan "perasaan" — harus berdasarkan data perilaku pengguna.</p>
+<p>Menentukan jumlah personel Service Desk tidak boleh berdasarkan "perasaan", harus berdasarkan data perilaku pengguna.</p>
 
 <strong>Parameter Penentuan (Sizing Factors):</strong>
 <ol>
@@ -1801,7 +1984,7 @@ const CATEGORIES = [
   <li><strong>Self-Service Adoption:</strong> Jika perusahaan memiliki Knowledge Base (FAQ/Portal Mandiri) yang lengkap, beban kerja Service Desk akan turun drastis.</li>
   <li><strong>Ticket Volume & Complexity:</strong> Lihat jumlah tiket per jam (<em>Peak Hour Volume</em>), bukan jumlah karyawan total.</li>
   <li><strong>Operational Resilience:</strong> Rule of thumb: minimal 2 orang per shift (agar jika satu orang istirahat, layanan tidak berhenti).</li>
-  <li><strong>Skill Mix:</strong> Prioritaskan <em>Communication Skill</em> daripada <em>Technical Skill</em> yang sangat dalam — tugas utama mereka adalah menangani orang (<em>human-centric</em>).</li>
+  <li><strong>Skill Mix:</strong> Prioritaskan <em>Communication Skill</em> daripada <em>Technical Skill</em> yang sangat dalam, tugas utama mereka adalah menangani orang (<em>human-centric</em>).</li>
 </ol>
 
 <h4>Formula Sizing (Pendekatan Analitik):</h4>
@@ -1817,7 +2000,7 @@ const CATEGORIES = [
   <li><strong>Proactive Communication:</strong> Strategi memberikan informasi kepada pengguna <em>sebelum</em> mereka melaporkan gangguan, bertujuan mengurangi volume tiket insiden.</li>
   <li><strong>Sizing:</strong> Proses menghitung kebutuhan sumber daya (manusia atau server) berdasarkan estimasi beban kerja di masa depan.</li>
   <li><strong>Self-Help / Self-Service:</strong> Portal di mana pengguna dapat mencari solusi sendiri (FAQ, tutorial, reset password mandiri) tanpa menghubungi agen.</li>
-  <li><strong>Peak Hour Volume:</strong> Jam-jam di mana jumlah tiket atau panggilan masuk mencapai titik tertinggi — acuan utama dalam menentukan jumlah agen yang harus piket.</li>
+  <li><strong>Peak Hour Volume:</strong> Jam-jam di mana jumlah tiket atau panggilan masuk mencapai titik tertinggi, acuan utama dalam menentukan jumlah agen yang harus piket.</li>
   <li><strong>Communication Skill:</strong> Keterampilan utama agen Service Desk untuk tetap tenang, ramah, dan jelas dalam menyampaikan informasi bahkan di bawah tekanan komplain pelanggan.</li>
 </ol>`,
         soal: {
@@ -1838,7 +2021,7 @@ const CATEGORIES = [
               q: "Apa alasan utama Communication Skill lebih diutamakan daripada Technical Skill yang sangat dalam untuk posisi Service Desk?",
               options: ["Karena mereka adalah front-liner yang harus meredam emosi pengguna dan mendistribusikan tiket dengan akurat, bukan teknisi yang memperbaiki masalah hingga ke akar", "Karena Technical Skill sudah digantikan oleh chatbot", "Agar mereka bisa menulis laporan survei dengan cepat", "Tidak ada alasan khusus"],
               answer: 0,
-              explain: "Service Desk adalah interface. Fokus mereka adalah kenyamanan pengguna dan ketepatan informasi — jika punya Technical Skill sangat dalam, itu bonus bukan kompetensi utama."
+              explain: "Service Desk adalah interface. Fokus mereka adalah kenyamanan pengguna dan ketepatan informasi, jika punya Technical Skill sangat dalam, itu bonus bukan kompetensi utama."
             }
           ],
           esai: [
@@ -1854,7 +2037,7 @@ const CATEGORIES = [
           ],
           esai: [
             "<strong>Analisis Sizing:</strong> Dengan 50 tiket/hari dan peak hour pukul 09:00-11:00, diperkirakan ~15-20 tiket masuk dalam 2 jam peak. Dengan rata-rata handling time 15 menit/tiket, dibutuhkan sekitar 2-3 agen aktif saat peak. Dengan Knowledge Base yang sudah ada, beban berkurang ~30%. Rekomendasi: <strong>2 agen shift pagi (07:00-15:00) + 1 agen shift siang (13:00-21:00)</strong> dengan 1 orang buffer/overlap. Total 3-4 SDM.",
-            "Mekanisme: Saat insiden besar terjadi (misal: server ERP down), Service Desk segera mengirimkan <em>System Banner</em> di portal perusahaan + <em>Email Blast</em> ke seluruh karyawan. Hasilnya: (1) Karyawan yang belum mengalami masalah tahu ada gangguan dan tidak perlu menelepon. (2) Karyawan yang sudah mengalami masalah mendapat kepastian bahwa tim TI sedang menangani. (3) Hanya satu tiket master yang dibuat untuk satu insiden — bukan ribuan tiket untuk penyebab yang sama. Pengurangan volume 70-80% terjadi karena mayoritas telepon bersifat 'hanya ingin tahu status', bukan laporan baru."
+            "Mekanisme: Saat insiden besar terjadi (misal: server ERP down), Service Desk segera mengirimkan <em>System Banner</em> di portal perusahaan + <em>Email Blast</em> ke seluruh karyawan. Hasilnya: (1) Karyawan yang belum mengalami masalah tahu ada gangguan dan tidak perlu menelepon. (2) Karyawan yang sudah mengalami masalah mendapat kepastian bahwa tim TI sedang menangani. (3) Hanya satu tiket master yang dibuat untuk satu insiden, bukan ribuan tiket untuk penyebab yang sama. Pengurangan volume 70-80% terjadi karena mayoritas telepon bersifat 'hanya ingin tahu status', bukan laporan baru."
           ]
         }
       },
@@ -1868,7 +2051,7 @@ const CATEGORIES = [
   <li><strong>System Uptime (Ketersediaan Sistem):</strong> Aplikasi seperti Email atau ERP menyala 24×7. Data center tidak dimatikan saat pegawai pulang kantor.</li>
   <li><strong>Support Window (Jendela SLA):</strong> Meskipun aplikasi menyala 24×7, dukungan teknisnya bisa hanya diatur pada <strong>Business Hours</strong> (misal 8×5: Senin–Jumat, 08:00–17:00).</li>
 </ul>
-<p><strong>Logika Sistem:</strong> Jika pengguna komplain Email rusak pada hari Minggu, tiket terbuat — tetapi <strong>argo timer SLA tidak berdetak</strong> hingga Senin pukul 08:00. Namun jika aplikasi yang rusak adalah CRM (support 24×7), argo SLA langsung berdetak di hari Minggu.</p>
+<p><strong>Logika Sistem:</strong> Jika pengguna komplain Email rusak pada hari Minggu, tiket terbuat, tetapi <strong>argo timer SLA tidak berdetak</strong> hingga Senin pukul 08:00. Namun jika aplikasi yang rusak adalah CRM (support 24×7), argo SLA langsung berdetak di hari Minggu.</p>
 
 <table>
   <thead><tr><th>Kategori Layanan</th><th>Jam Pelaporan</th><th>Status SLA Timer</th></tr></thead>
@@ -1885,22 +2068,31 @@ const CATEGORIES = [
 <p>Bagaimana jika tiket Email (SLA 8×5) masuk pukul 20:00 malam, dan ada teknisi piket yang mengerjakannya hingga selesai pukul 21:00?</p>
 <ul>
   <li><strong>Logika Sistem:</strong> Karena tiket dikerjakan dan ditutup di luar Service Window, sistem mengkalkulasi waktu pengerjaan sebagai <strong>0 detik</strong>.</li>
-  <li><strong>Status QA:</strong> Ini BUKAN bug/error. Ini adalah pencapaian luar biasa — selesai bahkan sebelum waktu argo resminya dimulai.</li>
+  <li><strong>Status QA:</strong> Ini BUKAN bug/error. Ini adalah pencapaian luar biasa, selesai bahkan sebelum waktu argo resminya dimulai.</li>
 </ul>
 
 <hr/>
 
 <h3>3. Otomasi Templat: Incident Model & Request Model</h3>
 <ul>
-  <li><strong>Incident Model:</strong> Untuk masalah rutin yang sudah diketahui persis solusinya — sistem menyediakan template dengan Auto-fill. Saat Service Desk memilih kategori tersebut, deskripsi dan tim penyelesai otomatis terisi penuh.</li>
+  <li><strong>Incident Model:</strong> Untuk masalah rutin yang sudah diketahui persis solusinya, sistem menyediakan template dengan Auto-fill. Saat Service Desk memilih kategori tersebut, deskripsi dan tim penyelesai otomatis terisi penuh.</li>
   <li><strong>Request Model (Onboarding Karyawan Baru):</strong> HRD hanya menekan satu tombol "Request Onboarding" (1 Parent Ticket). Di balik layar, Request Model memecah tiket menjadi beberapa Task/Work Order paralel ke masing-masing divisi secara otomatis.</li>
 </ul>
-<blockquote>
-  <strong>[HRD: Parent Ticket #RQ-100 — Onboarding Karyawan Baru]</strong><br>
-  ├── Task 1: Setup PC & Jaringan → IT Infrastructure<br>
-  ├── Task 2: Create Email & Active Directory → IT Server<br>
-  └── Task 3: Create ERP Account → IT Application
-</blockquote>
+<div class="mermaid-wrap">
+  <div class="mermaid-label">📊 Request Model — Auto-Generated Tasks Paralel</div>
+  <div class="mermaid">
+flowchart TD
+    HRD(["👤 HRD\n1x Klik Tombol"]) --> P["🎫 Parent Ticket #RQ-100\nOnboarding Karyawan Baru"]
+    P --> T1["Task 1\nSetup PC & Jaringan\n→ IT Infrastructure"]
+    P --> T2["Task 2\nCreate Email & Active Directory\n→ IT Server"]
+    P --> T3["Task 3\nCreate ERP Account\n→ IT Application"]
+    style HRD fill:#eceef8,stroke:#5b4cdb,color:#1a1835
+    style P fill:#e6f4ff,stroke:#2a7ee8,color:#1a3a5c
+    style T1 fill:#e8f8f0,stroke:#0aab7c,color:#045c3f
+    style T2 fill:#e8f8f0,stroke:#0aab7c,color:#045c3f
+    style T3 fill:#e8f8f0,stroke:#0aab7c,color:#045c3f
+  </div>
+</div>
 
 <hr/>
 
@@ -1956,8 +2148,8 @@ const CATEGORIES = [
         readTime: "5 menit",
         material: `<h3>1. Paradigma Penyelesaian: Firefighter vs Detective</h3>
 <ul>
-  <li><strong>Incident Management (Pemadam Kebakaran):</strong> Target utama SLA Insiden adalah <strong>layanan menyala kembali secepat mungkin</strong>. Menyelesaikan dengan cara restart atau workaround diperbolehkan — Insiden <strong>TIDAK</strong> membutuhkan Root Cause Analysis (RCA).</li>
-  <li><strong>Problem Management (Detektif):</strong> Target adalah mencari <strong>Akar Masalah</strong> dan membuat <strong>Solusi Permanen</strong>. Proses ini murni investigasi — <strong>SANGAT HARAM</strong> diukur menggunakan SLA waktu yang ketat. Pengukuran menggunakan fleksibilitas <em>Due Date</em> yang bisa dinegosiasikan.</li>
+  <li><strong>Incident Management (Pemadam Kebakaran):</strong> Target utama SLA Insiden adalah <strong>layanan menyala kembali secepat mungkin</strong>. Menyelesaikan dengan cara restart atau workaround diperbolehkan, Insiden <strong>TIDAK</strong> membutuhkan Root Cause Analysis (RCA).</li>
+  <li><strong>Problem Management (Detektif):</strong> Target adalah mencari <strong>Akar Masalah</strong> dan membuat <strong>Solusi Permanen</strong>. Proses ini murni investigasi, <strong>SANGAT HARAM</strong> diukur menggunakan SLA waktu yang ketat. Pengukuran menggunakan fleksibilitas <em>Due Date</em> yang bisa dinegosiasikan.</li>
 </ul>
 
 <hr/>
@@ -1970,22 +2162,30 @@ const CATEGORIES = [
 </ul>
 
 <h4>Visualisasi OLA Timer Engine:</h4>
-<blockquote>
-  <strong>SLA Utama: 8 Jam Total</strong><br>
-  [08:00] Tiket Dibuat → <strong>SLA UTAMA START</strong><br>
-  ├── [08:00–09:00] Service Desk → <strong>OLA SD: 1 Jam</strong><br>
-  ├── [09:00–16:00] Tim Server → <strong>OLA Server: 7 Jam ← Penyebab Keterlambatan!</strong><br>
-  └── [16:00–16:15] Tim Network → <strong>OLA Network: 15 Menit</strong><br>
-  [16:15] Tiket Closed → <strong>BREACHED (8 Jam 15 Menit)</strong><br>
-  <em>Sistem OLA membuktikan: penyebab Breach adalah Tim Server, bukan Tim Network sebagai pemegang terakhir.</em>
-</blockquote>
+<div class="mermaid-wrap">
+  <div class="mermaid-label">📊 OLA Multi-Timer: Identifikasi Bottleneck (SLA Utama 8 Jam)</div>
+  <div class="mermaid">
+flowchart LR
+    A["08:00\nTiket Dibuat\nSLA START"]
+    B["09:00\nLempar ke\nTim Server"]
+    C["16:00\nLempar ke\nTim Network"]
+    D["16:15\nClosed\nBREACHED"]
+    A -->|"OLA SD: 1 Jam"| B
+    B -->|"OLA Server: 7 Jam BOTTLENECK"| C
+    C -->|"OLA Network: 15 Menit"| D
+    style A fill:#e8f8f0,stroke:#0aab7c,color:#045c3f
+    style B fill:#fff3cd,stroke:#c47a00,color:#6b3f00
+    style C fill:#fff3cd,stroke:#c47a00,color:#6b3f00
+    style D fill:#fff0f0,stroke:#e8404a,color:#c0392b
+  </div>
+</div>
 
 <hr/>
 
 <h3>3. Pengecualian SLA: Disaster Recovery & Force Majeure</h3>
 <ul>
   <li>Kegagalan Data Center karena gempa bumi atau Force Majeure TIDAK diukur menggunakan SLA tiket Insiden reguler.</li>
-  <li>Status tiket diekskalasi menjadi <em>Major Incident / Disaster</em> — SLA reguler ditangguhkan.</li>
+  <li>Status tiket diekskalasi menjadi <em>Major Incident / Disaster</em>, SLA reguler ditangguhkan.</li>
   <li><strong>Parameter Pengganti:</strong> Kinerja TI diukur menggunakan metrik <em>Business Continuity</em>: <strong>RTO</strong> (<em>Recovery Time Objective</em>) dan <strong>RPO</strong> (<em>Recovery Point Objective</em>).</li>
 </ul>
 
@@ -2006,7 +2206,7 @@ const CATEGORIES = [
               q: "Aplikasi Mobile Banking crash dan nasabah tidak bisa bertransaksi. Tim Server memutuskan melakukan Restart paksa. Layanan menyala kembali, namun tim belum tahu mengapa crash. Dalam ITSM, tindakan me-restart ini disebut sebagai...",
               options: ["Root Cause Analysis", "Permanent Solution", "Workaround (Tindakan Insiden/Pemadam Kebakaran)", "Problem Management"],
               answer: 2,
-              explain: "Workaround. Solusi instan/sementara untuk memulihkan gangguan secepat mungkin. Akar masalah (mengapa crash) belum diperbaiki — itu domain Problem Management."
+              explain: "Workaround. Solusi instan/sementara untuk memulihkan gangguan secepat mungkin. Akar masalah (mengapa crash) belum diperbaiki, itu domain Problem Management."
             },
             {
               q: "Sebuah sistem ITSM tradisional mencatat Tim Aplikasi sebagai penyumbang kegagalan SLA tertinggi. Namun setelah diusut, Tim Aplikasi selalu menerima tiket hanya 5 menit sebelum batas SLA habis. Konfigurasi apa yang tidak dimiliki sistem ITSM tradisional tersebut?",
@@ -2028,13 +2228,13 @@ const CATEGORIES = [
         },
         kunci: {
           pg: [
-            "<strong>C. Workaround.</strong> Solusi instan/sementara untuk memulihkan gangguan secepat mungkin. Akar masalah (mengapa crash) belum diperbaiki — itu domain Problem Management yang berbeda.",
+            "<strong>C. Workaround.</strong> Solusi instan/sementara untuk memulihkan gangguan secepat mungkin. Akar masalah (mengapa crash) belum diperbaiki, itu domain Problem Management yang berbeda.",
             "<strong>C.</strong> Pengukuran OLA per grup. Tanpa argo waktu per grup, sistem hanya menyalahkan pemegang tiket terakhir (Tim Aplikasi) meskipun bottleneck sesungguhnya ada di tim sebelumnya yang memegang tiket terlalu lama.",
             "<strong>B. RTO (Recovery Time Objective).</strong> Dalam kondisi Force Majeure/Disaster, SLA Insiden reguler ditangguhkan dan digantikan oleh metrik Business Continuity: RTO dan RPO."
           ],
           esai: [
-            "Peraturan tersebut salah kaprah karena mencampur adukkan dua proses yang fundamentally berbeda: <strong>Incident Management</strong> (tujuan = layanan menyala kembali secepat mungkin, boleh pakai workaround) dengan <strong>Problem Management</strong> (tujuan = RCA + Solusi Permanen, bersifat investigatif). RCA tidak bisa dipaksakan dalam 2 jam — ini akan membuat teknisi mencari 'kambing hitam' atau 'jawaban asal jadi' untuk memenuhi batas waktu, bukan benar-benar menginvestigasi akar masalah. Akibatnya: masalah yang sama akan terus berulang karena root cause tidak pernah benar-benar diatasi.",
-            "<strong>Sistem SLA Tradisional:</strong> Hanya mencatat T-Awal dan T-Akhir tiket. Jika SLA breached, yang disalahkan adalah pemegang tiket terakhir — meskipun mereka hanya memegang tiket selama 15 menit dari total 8 jam. <strong>OLA Multi-Timer:</strong> Setiap kali tiket berpindah tangan antar-grup, argo grup lama berhenti dan argo grup baru dimulai. Hasilnya: laporan dapat menunjukkan dengan presisi 'Tim Server memegang tiket selama 7 jam dari total 8 jam 15 menit SLA' — membuktikan bahwa bottleneck ada di Tim Server, bukan Tim Network yang menjadi pemegang terakhir."
+            "Peraturan tersebut salah kaprah karena mencampur adukkan dua proses yang fundamentally berbeda: <strong>Incident Management</strong> (tujuan = layanan menyala kembali secepat mungkin, boleh pakai workaround) dengan <strong>Problem Management</strong> (tujuan = RCA + Solusi Permanen, bersifat investigatif). RCA tidak bisa dipaksakan dalam 2 jam, ini akan membuat teknisi mencari 'kambing hitam' atau 'jawaban asal jadi' untuk memenuhi batas waktu, bukan benar-benar menginvestigasi akar masalah. Akibatnya: masalah yang sama akan terus berulang karena root cause tidak pernah benar-benar diatasi.",
+            "<strong>Sistem SLA Tradisional:</strong> Hanya mencatat T-Awal dan T-Akhir tiket. Jika SLA breached, yang disalahkan adalah pemegang tiket terakhir, meskipun mereka hanya memegang tiket selama 15 menit dari total 8 jam. <strong>OLA Multi-Timer:</strong> Setiap kali tiket berpindah tangan antar-grup, argo grup lama berhenti dan argo grup baru dimulai. Hasilnya: laporan dapat menunjukkan dengan presisi 'Tim Server memegang tiket selama 7 jam dari total 8 jam 15 menit SLA', membuktikan bahwa bottleneck ada di Tim Server, bukan Tim Network yang menjadi pemegang terakhir."
           ]
         }
       }
@@ -2043,15 +2243,54 @@ const CATEGORIES = [
 ];
 
 // ═══════════════════════════════════════════════
+// LOCALSTORAGE
+// ═══════════════════════════════════════════════
+const LS_KEY = 'sqa_prep_state_v1';
+
+function saveState() {
+  try {
+    localStorage.setItem(LS_KEY, JSON.stringify({
+      catIdx:         state.catIdx,
+      partIdx:        state.partIdx,
+      quizAnswers:    state.quizAnswers,
+      completedParts: state.completedParts
+    }));
+  } catch(e) {}
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    if (saved.catIdx         !== undefined) state.catIdx         = saved.catIdx;
+    if (saved.partIdx        !== undefined) state.partIdx        = saved.partIdx;
+    if (saved.quizAnswers    !== undefined) state.quizAnswers    = saved.quizAnswers;
+    if (saved.completedParts !== undefined) state.completedParts = saved.completedParts;
+  } catch(e) {}
+}
+
+function resetProgress() {
+  if (!confirm('Reset semua progress dan jawaban quiz? Data tidak bisa dikembalikan.')) return;
+  localStorage.removeItem(LS_KEY);
+  state.catIdx = 0;
+  state.partIdx = 0;
+  state.quizAnswers = {};
+  state.completedParts = {};
+  renderAll();
+}
+
+// ═══════════════════════════════════════════════
 // STATE
 // ═══════════════════════════════════════════════
 const state = {
-  view: 'welcome',
+  view: 'part',
   catIdx: 0,
   partIdx: 0,
   quizAnswers: {},
   completedParts: {}
 };
+loadState(); // ← restore dari localStorage
 
 // ═══════════════════════════════════════════════
 // RENDER ALL
@@ -2060,6 +2299,7 @@ function renderAll() {
   renderSidebar();
   renderMain();
   updateProgress();
+  saveState(); // ← simpan setiap render
 }
 
 function renderSidebar() {
@@ -2067,7 +2307,7 @@ function renderSidebar() {
   nav.innerHTML = '';
   CATEGORIES.forEach((cat, ci) => {
     const allDone = cat.parts.every((_, pi) => state.completedParts[`${ci}-${pi}`]);
-    const isOpen = state.view === 'part' && state.catIdx === ci;
+    const isOpen = state.catIdx === ci;
     const group = document.createElement('div');
     group.className = 'cat-group';
     group.innerHTML = `
@@ -2080,9 +2320,9 @@ function renderSidebar() {
       <div class="parts-list ${isOpen ? 'open' : ''}">
         ${cat.parts.map((p, pi) => {
           const done = state.completedParts[`${ci}-${pi}`];
-          const active = state.view === 'part' && state.catIdx === ci && state.partIdx === pi;
+          const active = state.catIdx === ci && state.partIdx === pi;
           return `<button class="part-btn ${active ? 'active' : ''}" onclick="goTo(${ci},${pi})">
-            Part ${pi+1}: ${p.title.length > 50 ? p.title.slice(0,50)+'…' : p.title}
+            Part ${pi+1}
             ${done ? '<span class="done-badge" style="margin-left:4px">✓</span>' : ''}
           </button>`;
         }).join('')}
@@ -2093,13 +2333,15 @@ function renderSidebar() {
 }
 
 function toggleCat(ci) {
-  if (state.view === 'part' && state.catIdx === ci) {
-    state.view = 'welcome';
+  if (state.catIdx === ci) {
+    // klik kategori yang sama → tetap tampilkan part pertama
+    state.catIdx = ci;
+    state.partIdx = 0;
   } else {
     state.catIdx = ci;
     state.partIdx = 0;
-    state.view = 'part';
   }
+  state.view = 'part';
   renderAll();
 }
 
@@ -2114,43 +2356,7 @@ function goTo(ci, pi) {
 
 function renderMain() {
   const el = document.getElementById('main-panel');
-  if (state.view === 'welcome') {
-    renderWelcome(el);
-  } else {
-    renderPart(el);
-  }
-}
-
-function renderWelcome(el) {
-  el.innerHTML = `
-    <div class="welcome-screen">
-      <div class="big-title">Belajar SQA<br>dari Nol 🎓</div>
-      <p class="sub">Platform belajar Software Quality Assurance yang singkat, padat, dan interaktif. Materi dikemas dengan soal latihan pilihan ganda, esai, beserta kunci jawaban lengkap — dirancang untuk persiapan ujian dan karir QA.</p>
-      <div class="feature-grid">
-        <div class="feat-card">
-          <div class="icon">📖</div>
-          <strong>Materi Terstruktur</strong>
-          <p>Setiap part berisi materi + glosarium yang dikemas jelas, padat, dan mudah dipahami.</p>
-        </div>
-        <div class="feat-card">
-          <div class="icon">✏️</div>
-          <strong>Soal Latihan Lengkap</strong>
-          <p>Pilihan ganda dengan feedback langsung dan soal esai analitik untuk setiap materi.</p>
-        </div>
-        <div class="feat-card">
-          <div class="icon">🔑</div>
-          <strong>Kunci Jawaban Lengkap</strong>
-          <p>Pembahasan menyeluruh untuk pilihan ganda maupun esai tersedia langsung.</p>
-        </div>
-        <div class="feat-card">
-          <div class="icon">📈</div>
-          <strong>Track Progress</strong>
-          <p>Pantau kemajuan belajar lewat progress bar di sidebar setiap saat.</p>
-        </div>
-      </div>
-      <button class="start-btn" onclick="goTo(0,0)">Mulai Belajar →</button>
-    </div>
-  `;
+  renderPart(el);
 }
 
 function renderPart(el) {
@@ -2187,8 +2393,12 @@ function renderPart(el) {
             </button>`;
           }).join('')}
         </div>
-        <div class="quiz-feedback${answered ? ' show' : ''} ${answered && correct ? 'ok' : 'no'}" id="qfb-${qi}">
-          ${answered ? (correct ? '✓ Benar! ' : '✗ Kurang tepat. ') + q.explain : ''}
+        <div class="quiz-feedback${answered ? ' show' : ''}${answered ? (correct ? ' ok' : ' no') : ''}" id="qfb-${qi}">
+          ${answered
+            ? (correct
+                ? `<span style="font-size:16px;margin-right:6px">✅</span><strong>Benar!</strong> ${q.explain}`
+                : `<span style="font-size:16px;margin-right:6px">❌</span><strong>Kurang tepat.</strong> ${q.explain}`)
+            : ''}
         </div>
       </div>
     `;
@@ -2217,29 +2427,54 @@ function renderPart(el) {
   ` : '';
 
   // Kunci HTML
+  const kunciId = `kunci-${state.catIdx}-${state.partIdx}`;
   const kunciHtml = (part.kunci) ? `
     <div class="section-divider">
       <div class="section-divider-line"></div>
-      <span class="section-divider-text">Kunci Jawaban & Pembahasan</span>
+      <span class="section-divider-text">Resolution Log, Kunci Jawaban</span>
       <div class="section-divider-line"></div>
     </div>
-    <div class="section-label">
-      <div class="section-label-icon kunci">🔑</div>
-      <div>
-        <h3>Kunci Jawaban</h3>
-        <p>Pembahasan lengkap untuk setiap soal di atas</p>
-      </div>
-    </div>
-    <div class="kunci-section">
-      <div class="kunci-card">
-        ${part.kunci.pg && part.kunci.pg.length > 0 ? `
-          <h4>📋 Bagian A — Pilihan Ganda</h4>
-          <ol>${part.kunci.pg.map(k => `<li>${k}</li>`).join('')}</ol>
-        ` : ''}
-        ${part.kunci.esai && part.kunci.esai.length > 0 ? `
-          <h4>✍️ Bagian B — Esai Singkat</h4>
-          <ol>${part.kunci.esai.map(k => `<li>${k}</li>`).join('')}</ol>
-        ` : ''}
+    <div class="kunci-accordion" id="${kunciId}-wrap">
+      <button class="kunci-toggle" onclick="toggleKunci('${kunciId}')">
+        <div class="kunci-toggle-icon">🔑</div>
+        <div class="kunci-toggle-label">
+          <strong>Answer Key & Resolution Log</strong>
+          <span>Pembahasan teknis, klik untuk membuka / menutup</span>
+        </div>
+        <span class="kunci-status closed" id="${kunciId}-status">● Closed</span>
+        <span class="kunci-chevron" id="${kunciId}-chevron">▶</span>
+      </button>
+      <div class="kunci-body" id="${kunciId}-body">
+        <div class="kunci-inner">
+          ${part.kunci.pg && part.kunci.pg.length > 0 ? `
+            <div class="kunci-group">
+              <div class="kunci-group-header">
+                <span class="kunci-group-badge pg">Multiple Choice</span>
+                <span class="kunci-group-title">Bagian A, Pilihan Ganda</span>
+              </div>
+              ${part.kunci.pg.map((k, i) => `
+                <div class="kunci-item">
+                  <span class="kunci-item-num">Q${i+1}</span>
+                  <span>${k}</span>
+                </div>
+              `).join('')}
+            </div>
+          ` : ''}
+          ${part.kunci.esai && part.kunci.esai.length > 0 ? `
+            <div class="kunci-group">
+              <div class="kunci-group-header">
+                <span class="kunci-group-badge esai">Essay</span>
+                <span class="kunci-group-title">Bagian B, Esai Singkat</span>
+              </div>
+              ${part.kunci.esai.map((k, i) => `
+                <div class="kunci-item">
+                  <span class="kunci-item-num">E${i+1}</span>
+                  <span>${k}</span>
+                </div>
+              `).join('')}
+            </div>
+          ` : ''}
+        </div>
       </div>
     </div>
   ` : '';
@@ -2274,7 +2509,7 @@ function renderPart(el) {
         <div class="section-label-icon materi">📖</div>
         <div>
           <h3>Materi Pembelajaran</h3>
-          <p>Part ${state.partIdx + 1} — ${part.title}</p>
+          <p>Part ${state.partIdx + 1}, ${part.title}</p>
         </div>
       </div>
       <div class="material-card">${highlightTerms(part.material)}</div>
@@ -2295,7 +2530,7 @@ function renderPart(el) {
       <div class="soal-section">
         <div class="soal-type-header">
           <span class="soal-type-badge pg">Pilihan Ganda</span>
-          <span class="soal-type-title">Bagian A — Pilihan Ganda</span>
+          <span class="soal-type-title">Bagian A, Pilihan Ganda</span>
         </div>
         ${pgHtml}
         <div class="score-banner${allAnswered ? ' show' : ''}" id="score-banner">
@@ -2320,6 +2555,10 @@ function renderPart(el) {
     </div>
   `;
 
+  // Render Mermaid diagrams (fire-and-forget, no await needed)
+  mermaid.run({ nodes: el.querySelectorAll('.mermaid') })
+    .catch(e => console.warn('Mermaid render error:', e));
+
   // Attach term click listeners
   el.querySelectorAll('.term').forEach(span => {
     span.addEventListener('click', (e) => {
@@ -2338,8 +2577,12 @@ function goToNext(ci, pi) {
 function goWelcome() {
   const key = `${state.catIdx}-${state.partIdx}`;
   state.completedParts[key] = true;
-  state.view = 'welcome';
+  // Kembali ke Part 1 setelah semua materi selesai
+  state.catIdx = 0;
+  state.partIdx = 0;
+  state.view = 'part';
   renderAll();
+  window.scrollTo(0, 0);
 }
 
 function highlightTerms(html) {
@@ -2374,8 +2617,15 @@ function answerQuiz(qi, chosen) {
     else if (oi === chosen && !correct) btn.classList.add('wrong');
   });
   const fb = document.getElementById(`qfb-${qi}`);
-  fb.classList.add('show', correct ? 'ok' : 'no');
-  fb.textContent = (correct ? '✓ Benar! ' : '✗ Kurang tepat. ') + q.explain;
+  // Bersihkan class lama, lalu tambah yang benar
+  fb.classList.remove('ok', 'no');
+  fb.classList.add('show');
+  fb.classList.add(correct ? 'ok' : 'no');
+  fb.innerHTML = correct
+    ? `<span style="font-size:16px;margin-right:6px">✅</span><strong>Benar!</strong> ${q.explain}`
+    : `<span style="font-size:16px;margin-right:6px">❌</span><strong>Kurang tepat.</strong> ${q.explain}`;
+
+  saveState(); // ← simpan setiap jawaban
 
   const quizKey = `${state.catIdx}-${state.partIdx}`;
   const pgQuiz = (part.soal && part.soal.pg) ? part.soal.pg : [];
@@ -2409,6 +2659,25 @@ function retryQuiz() {
     delete state.quizAnswers[`${quizKey}-${qi}`];
   });
   renderMain();
+}
+
+function toggleKunci(id) {
+  const body    = document.getElementById(`${id}-body`);
+  const status  = document.getElementById(`${id}-status`);
+  const chevron = document.getElementById(`${id}-chevron`);
+  if (!body) return;
+  const isOpen = body.classList.contains('open');
+  if (isOpen) {
+    body.classList.remove('open');
+    chevron.classList.remove('open');
+    status.className = 'kunci-status closed';
+    status.textContent = '● Closed';
+  } else {
+    body.classList.add('open');
+    chevron.classList.add('open');
+    status.className = 'kunci-status opened';
+    status.textContent = '● Open';
+  }
 }
 
 // ═══════════════════════════════════════════════
